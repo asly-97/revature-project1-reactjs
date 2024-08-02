@@ -1,0 +1,8 @@
+.err_msg{
+    color: red;
+    text-align: center;
+}
+
+#disabled_btn{
+    background-color: gray;
+}
