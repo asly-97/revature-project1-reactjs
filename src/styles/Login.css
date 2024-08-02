@@ -1,6 +1,7 @@
 .err_msg{
     color: red;
     text-align: center;
+    font-size: small;
 }
 
 #disabled_btn{

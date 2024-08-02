@@ -8,6 +8,8 @@ export default function() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [disableBtn, setDisableBtn] = useState(true);
+    const [usernameMsg, setUsernameMsg] = useState("");
+    const [passwordMsg, setPasswordMsg] = useState("");
 
     function authenticate(){
         const body = {'username':username, 'password':password};
@@ -24,11 +26,23 @@ export default function() {
     }
 
     function validate(input:any){
-        if(input.target.name == "username")
-            setUsername(input.target.value.trim());
+        if(input.target.name == "username"){
+            let value = input.target.value.trim();
+            setUsername(value);
+            if(value.length <= 2)
+                setUsernameMsg("please enter 3 or more characters");
+            else
+                setUsernameMsg("");
+        }
 
-        if(input.target.name == "password")
-            setPassword(input.target.value.trim());
+        if(input.target.name == "password"){
+            let value = input.target.value.trim();
+            setPassword(value);
+            if(value.length <= 2)
+                setPasswordMsg("please enter 3 or more characters");
+            else
+                setPasswordMsg("");
+        }
     }
 
     useEffect(()=>{
@@ -48,12 +62,14 @@ export default function() {
                 <div className="row gy-2 overflow-hidden">
                 <div className="err_msg">{message}</div>
                 <div className="col-12">
+                    <div className="err_msg">{usernameMsg}</div>
                     <div className="form-floating mb-3">
                         <input className="form-control" name="username" id="username" placeholder="Usename" onChange={validate} />
                         <label htmlFor="username" className="form-label">Username</label>
                     </div>
                 </div>
                 <div className="col-12">
+                    <div className="err_msg">{passwordMsg}</div>
                     <div className="form-floating mb-3">
                         <input type="password" className="form-control" name="password" id="password" placeholder="Password"  onChange={validate} />
                         <label htmlFor="password" className="form-label">Password</label>
