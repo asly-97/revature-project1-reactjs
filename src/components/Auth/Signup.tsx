@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import { Alert, Button, Card, Form } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 
 export const Signup: React.FC = () => {
@@ -16,6 +17,8 @@ export const Signup: React.FC = () => {
 
     const[showAlertMessage,setShowAlertMessage] = useState(false)
     const[alertMessage,setAlertMessage] = useState("")
+
+    const[successSignup,setSuccessSignup] = useState(false)
 
     {/** on input value changed, save it */}
     const onInputValueChanged = (input:any) =>{
@@ -47,7 +50,12 @@ export const Signup: React.FC = () => {
                 .then(response => {
                     console.log('API Response Status:',response.status)
                     console.log('API Response Data:',response.data)
-                    console.log()
+
+                    //success
+                    if(response.status>=200 && response.status<=299){
+                        setSuccessSignup(true)
+                    }
+                    
                 })
                 .catch(err => {
                     console.log(err)
@@ -59,7 +67,7 @@ export const Signup: React.FC = () => {
     }
 
     return(
-        <Card style={{width:'500px'}}>
+        <Card style={{width:'600px'}}>
             <Card.Body>
             <Form>
                 <Form.Group className="mb-3" controlId="formFirstName">
@@ -88,6 +96,11 @@ export const Signup: React.FC = () => {
 
                 <Alert key='warning' variant='warning' show={showAlertMessage}>
                     {alertMessage}
+                </Alert>
+
+                <Alert key='success' variant='success' show={successSignup}>
+                Your account has been successfully created. Please log in<span> </span>
+                <Link style={{color:'darkgreen',fontWeight:'bold'}} to='/login'>here.</Link> 
                 </Alert>
 
                 <Button onClick={signup} variant="primary">
