@@ -2,22 +2,24 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Login from './components/Auth/Login';
 import { Breadcrumb } from 'react-bootstrap';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 function App() {
 
   const[isLoggedIn,setLoggedIn] = useState(false)
 
   const navigate = useNavigate()
+  const location = useLocation();
 
   useEffect(()=>{
 
+    console.log(location)
     //if the user isn't logged in, sent them to login page
-    if(!isLoggedIn){
+    if(!isLoggedIn && location.pathname == '/'){
       navigate('/login')
     }
 
-  },[])
+  })
 
 
   return (
