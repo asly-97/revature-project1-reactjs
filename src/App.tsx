@@ -2,26 +2,24 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Login from './components/Auth/Login';
+import { Breadcrumb } from 'react-bootstrap';
+import { Link, Outlet } from 'react-router-dom';
 
 function App() {
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <Login />
+    <>
+      { /** This routes navigator is temporairily */  }
+      <Breadcrumb>
+        <Breadcrumb.Item> <Link to="/">Home</Link> </Breadcrumb.Item>
+        <Breadcrumb.Item> <Link to="/login">Login</Link> </Breadcrumb.Item>
+        <Breadcrumb.Item> <Link to="/signup">Signup</Link> </Breadcrumb.Item>
+      </Breadcrumb>
+
+      <h3>Home Page</h3>
+
+      //Rendered page goes here
+      <Outlet />
+    </>
   );
 }
 
