@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
-import { Alert, Button, Card, Form } from "react-bootstrap"
+import { Alert, Button, Card, Col, Container, Form, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 
@@ -67,47 +67,47 @@ export const Signup: React.FC = () => {
     }
 
     return(
-        <Card style={{width:'600px'}}>
-            <Card.Body>
-            <Form>
-                <Form.Group className="mb-3" controlId="formFirstName">
-                    <Form.Label>First name</Form.Label>
-                    <Form.Control name='firstName' onChange={onInputValueChanged} type="text" placeholder="Enter first name"  />
-                </Form.Group>
+        <Card style={{ width: '24rem' }}>
+        <Card.Body>
+        <Form>
+            <Form.Group className="mb-3" controlId="formFirstName">
+                <Form.Label>First name</Form.Label>
+                <Form.Control name='firstName' onChange={onInputValueChanged} type="text" placeholder="Enter first name"  />
+            </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formLastName">
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control name="lastName" onChange={onInputValueChanged}  type="text" placeholder="Enter last name" />
-                </Form.Group>
+            <Form.Group className="mb-3" controlId="formLastName">
+                <Form.Label>Last name</Form.Label>
+                <Form.Control name="lastName" onChange={onInputValueChanged}  type="text" placeholder="Enter last name" />
+            </Form.Group>
 
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control name="username" onChange={onInputValueChanged}  type="text" placeholder="Enter email" />
-                    <Form.Text className="text-muted">
-                    Please choose a unique username.
-                    </Form.Text>
-                </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Username</Form.Label>
+                <Form.Control name="username" onChange={onInputValueChanged}  type="text" placeholder="Enter email" />
+                <Form.Text className="text-muted">
+                Please choose a unique username.
+                </Form.Text>
+            </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control name="password" onChange={onInputValueChanged}  type="password" placeholder="Password" />
-                </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control name="password" onChange={onInputValueChanged}  type="password" placeholder="Password" />
+            </Form.Group>
 
-                <Alert key='warning' variant='warning' show={showAlertMessage}>
-                    {alertMessage}
-                </Alert>
+            <Alert key='warning' variant='warning' show={showAlertMessage}>
+                {alertMessage}
+            </Alert>
 
-                <Alert key='success' variant='success' show={successSignup}>
-                Your account has been successfully created. Please log in<span> </span>
-                <Link style={{color:'darkgreen',fontWeight:'bold'}} to='/login'>here.</Link> 
-                </Alert>
+            <Alert key='success' variant='success' show={successSignup}>
+            Your account has been successfully created. Please log in<span> </span>
+            <Link style={{color:'darkgreen',fontWeight:'bold'}} to='/login'>here.</Link> 
+            </Alert>
 
-                <Button onClick={signup} variant="primary">
-                    Sign up
-                </Button>
-            </Form>
-            </Card.Body>
-        </Card>
+            <Button onClick={signup} variant="primary">
+                Sign up
+            </Button>
+        </Form>
+        </Card.Body>
+    </Card>
     )
 }

@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import '../../styles/Login.css';
-import '../../styles/bootstrap.min.css';
+//already imported through React Bootstrap
+//import '../../styles/bootstrap.min.css';
 import { Link, useNavigate } from "react-router-dom";
 
 export default function() {

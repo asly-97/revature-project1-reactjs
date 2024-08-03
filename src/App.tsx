@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import Login from './components/Auth/Login';
-import { Breadcrumb } from 'react-bootstrap';
+import { Breadcrumb, Col, Container, Row } from 'react-bootstrap';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 function App() {
@@ -24,17 +23,25 @@ function App() {
 
   return (
     <>
-      { /** This routes navigator is temporairily */  }
-      <Breadcrumb>
-        <Breadcrumb.Item> <Link to="/">Home</Link> </Breadcrumb.Item>
-        <Breadcrumb.Item> <Link to="/login">Login</Link> </Breadcrumb.Item>
-        <Breadcrumb.Item> <Link to="/signup">Signup</Link> </Breadcrumb.Item>
-      </Breadcrumb>
 
-      <h3>Home Page</h3>
-
-      { /** Rendered page automatically goes here */  }
-      <Outlet />
+      <Container fluid>
+        <Row className='justify-content-center'>
+          <Col xs='auto' >
+            { /** This routes navigator is temporairily */  }
+            <Breadcrumb>
+              <Breadcrumb.Item> <Link to="/">Home</Link> </Breadcrumb.Item>
+              <Breadcrumb.Item> <Link to="/login">Login</Link> </Breadcrumb.Item>
+              <Breadcrumb.Item> <Link to="/signup">Signup</Link> </Breadcrumb.Item>
+            </Breadcrumb>
+          </Col>
+        </Row>
+        <Row className='justify-content-center'>
+          <Col xs='auto'>
+            { /** Rendered page automatically goes here */  }
+            <Outlet />
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }
