@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import '../../styles/Login.css';
-import '../../styles/bootstrap.min.css';
+//import '../../styles/Login.css';
+//import '../../styles/bootstrap.min.css';
 
 export default function() {
     const [message, setMessage] = useState("");
