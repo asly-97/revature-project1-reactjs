@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-//import '../../styles/Login.css';
+import '../../styles/Login.css';
+//already imported through React Bootstrap
 //import '../../styles/bootstrap.min.css';
+import { Link, useNavigate } from "react-router-dom";
 
 export default function() {
     const [message, setMessage] = useState("");
@@ -11,11 +13,21 @@ export default function() {
     const [usernameMsg, setUsernameMsg] = useState("");
     const [passwordMsg, setPasswordMsg] = useState("");
 
+    const navigate = useNavigate();
+    
+    const api = axios.create({
+        baseURL: 'http://localhost:8080'
+    });
+
     function authenticate(){
         const body = {'username':username, 'password':password};
-        axios.post('http://localhost:8080/authenticate', body)
+        api.post('/authenticate', body)
             .then(function (response) {
-                setMessage(response.data.token);
+                localStorage.setItem("token",response.data.token);
+                if(response.data.role == 'Manager')
+                    navigate('../manager/reimbursement');
+                else if(response.data.role == 'Employee')
+                    navigate('../employee/home');
             })
             .catch((error) =>{
                 if(error.response) // if there was a response with status != 2xx
@@ -78,6 +90,9 @@ export default function() {
                 <div className="col-12">
                     <div className="d-grid my-3">
                         <button disabled={disableBtn} id={disableBtn?"disabled_btn":""} className="btn btn-primary btn-lg" type="submit" onClick={authenticate}>Log in</button>
+                    </div>
+                    <div className="col-12">
+                    <p className="m-0 text-secondary text-center">Don't have an account? <Link to="/signup" className="link-primary text-decoration-none">Sign up</Link></p>
                     </div>
                 </div>
                 </div>
