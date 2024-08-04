@@ -24,11 +24,12 @@ export default function() {
         const body = {'username':username, 'password':password};
         api.post('/authenticate', body)
             .then(function (response) {
+                console.log('Response data: ',response.data);
                 localStorage.setItem("token",response.data.token);
                 if(response.data.role == 'Manager')
-                    navigate('../manager/reimbursement');
+                    navigate('/manager/reimbursement');
                 else if(response.data.role == 'Employee')
-                    navigate('../employee/home');
+                    navigate('/employee/home');
             })
             .catch((error) =>{
                 if(error.response) // if there was a response with status != 2xx

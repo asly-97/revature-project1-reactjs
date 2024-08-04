@@ -1,39 +1,69 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import ReimbursementList from "../../../components/Reimbursement/ReimbursementList";
-import { ReimbursementInterface } from "../../../components/Interfaces/ReimbursementInterface";
+import { __api_url } from "../../../utils/constants"
+import { Button, Card, Col, Container, Row } from "react-bootstrap"
+import MReimbursementItem from "../../../components/Reimbursement/ManagerReimbursement/MReimbursementItem"
+import { ReimbursementInterface } from "../../../components/Interfaces/ReimbursementInterface"
 
 
-export const Reimbursementpage: React.FC = () => {
 
-    const [reimbursements, setReimbursements] = useState<{reimbursementsList?:ReimbursementInterface[]}>({});
-    const navigate = useNavigate();
+export const ReimbursementPage: React.FC = () => {
     
-    useEffect(()=>{
-        let token = localStorage.getItem('token');
-        if(token){
-            const api = axios.create({
-                baseURL: 'http://localhost:8080',
-                headers: {'Authorization': 'Bearer '+token}
-            });
-            api.get('/reimbursements')
-                .then((response)=>{
-                    setReimbursements({reimbursementsList:response.data});
-                })
-                .catch((error) =>{
-                    if(error.response?.status == 401)
-                        navigate('../login');
-                });
+    const[reimbursements,setReimbursements] = useState([])
+
+
+    const _token = localStorage.getItem('token')
+
+    const api = axios.create({
+        baseURL: __api_url,
+        headers:{
+            Authorization: `Bearer ${_token}`
         }
-        else
-            navigate('../login');
-    },[]);
+    })
+
+    useEffect(() => {
+        getAllReimbursements()
+    },[])
+
+    
+    //load whenver reimbursement updated
+    useEffect( () => {
+        console.log('- reimbursements -updated: ',reimbursements)
+    },[reimbursements])
+
+
+    const getAllReimbursements = async () => {
+        await api.get('/reimbursements')
+                .then( ({data}) => {
+                    console.log('-- data -- ',data)
+                    setReimbursements(data)
+                })
+                .catch(err => {
+                    console.log('-- error -- ',err)
+                })
+    }
+
 
     return(
         <>
-        <h3>Manager Reimbursements Page</h3>
-        <ReimbursementList {...reimbursements} />
+            <Container fluid>
+
+                <Row xs={1} md={3} className="g-3">
+
+                {
+
+                    reimbursements.map( (reimbItem) => {
+                        return (
+                            <Col>
+                                <MReimbursementItem reimbursement={reimbItem} />
+                            </Col>
+                        )
+                    })
+                }
+
+                    
+                </Row>
+            </Container>
         </>
     )
 }

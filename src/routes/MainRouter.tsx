@@ -4,7 +4,7 @@ import App from "../App";
 import { LoginPage } from "../pages/GuestPages/LoginPage/LoginPage";
 import { SignupPage } from "../pages/GuestPages/SignupPage/SignupPage";
 import { EmployeeHomePage } from "../pages/EmployeePages/EmployeeHomePage";
-import { Reimbursementpage } from "../pages/ManagerPages/ReimbursementPage/ReimbursementPage";
+import { ReimbursementPage } from "../pages/ManagerPages/ReimbursementPage/ReimbursementPage";
 import { UsersPage } from "../pages/ManagerPages/UsersPage/UsersPage";
 
 
@@ -17,7 +17,7 @@ export const MainRouter = createBrowserRouter([
             { path: 'login', element: <LoginPage/> },
             { path: 'signup', element: <SignupPage/> },
             { path: 'employee/home', element: <EmployeeHomePage/> },
-            { path: 'manager/reimbursement', element: <Reimbursementpage/> },
+            { path: 'manager/reimbursement', element: <ReimbursementPage/> },
             { path: 'manager/users', element: <UsersPage/> },
         ]
     }
