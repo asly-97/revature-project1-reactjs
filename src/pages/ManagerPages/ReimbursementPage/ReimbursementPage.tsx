@@ -1,27 +1,49 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
-import reimbursementService from "../../../services/reimbursementService";
-import { useNavigate } from "react-router-dom";
+import { __api_url } from "../../../utils/constants"
 
 
-export const Reimbursementpage: React.FC = () => {
 
-    const [reimbursements, setReimbursements] = useState([]);
-    const navigate = useNavigate();
+export const ReimbursementPage: React.FC = () => {
     
-    useEffect(()=>{
-        reimbursementService.getReimbursementsByUserID(2).then((r)=>{
-            if(r) // not null
-                setReimbursements(r);
-            else
-                navigate('/login')
-        });
-    },[]);
+    const[reimbursements,setReimbursements] = useState([])
+
+
+    const _token = localStorage.getItem('token')
+
+    const api = axios.create({
+        baseURL: __api_url,
+        headers:{
+            Authorization: `Bearer ${_token}`
+        }
+    })
+
+    useEffect(() => {
+        getAllReimbursements()
+    },[])
+
+    
+    //load whenver reimbursement updated
+    useEffect( () => {
+
+        console.log('- reimbursements -updated: ',reimbursements)
+    },[reimbursements])
+
+
+    const getAllReimbursements = async () => {
+        await api.get('/reimbursements')
+                .then( ({data}) => {
+                    console.log('-- data -- ',data)
+                    setReimbursements(data)
+                })
+                .catch(err => {
+                    console.log('-- error -- ',err)
+                })
+    }
 
     return(
         <>
-        <h3>Manager Reimbursements Page</h3>
-        {reimbursements.map((q)=>q['reimbId']+"  ")}
-        <br/>{reimbursements.length}
+
         </>
     )
 }
