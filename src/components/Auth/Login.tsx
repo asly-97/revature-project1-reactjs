@@ -76,15 +76,17 @@ export default function() {
                         <Row>
                             <div className="err_msg">{usernameMsg}</div>
                             <Form.Group className="mb-3">
-                                <Form.Label>Username</Form.Label>
+                                <Form.FloatingLabel label="Username">
                                 <Form.Control type="text" name="username" id="username" placeholder="Username" onChange={validate} />
+                                </Form.FloatingLabel>
                             </Form.Group>
                         </Row>
                         <Row>
                             <div className="err_msg">{passwordMsg}</div>
                             <Form.Group className="mb-3">
-                                <Form.Label>Password</Form.Label>
+                                <Form.FloatingLabel label="Password">
                                 <Form.Control type="password" name="password" id="password" placeholder="Password" onChange={validate} />
+                                </Form.FloatingLabel>
                             </Form.Group>
                         </Row>
                         <Row>
