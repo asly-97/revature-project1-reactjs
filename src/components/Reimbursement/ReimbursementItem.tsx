@@ -11,7 +11,7 @@ function ReimbursementItem(reimbursement:ReimbursementInterface) {
     color = 'success';
     resolvedAt = Date.parse(reimbursement.resolvedAt?.toString()+'');
   }
-  else if(reimbursement.status == 'declined'){
+  else if(reimbursement.status == 'denied'){
       color = 'danger';
       resolvedAt = Date.parse(reimbursement.resolvedAt?.toString()+'');
   }
@@ -26,14 +26,14 @@ function ReimbursementItem(reimbursement:ReimbursementInterface) {
           key={color}
           text='white'
           style={{ width: '18rem' }}
-          className="mb-2"
+          className="mb-3"
         >
           <Card.Header>{reimbursement.amount}$</Card.Header>
           <Card.Body>
             <Card.Title>{reimbursement.user?.firstName+' '+reimbursement.user?.lastName}</Card.Title>
-            <Card.Text>{reimbursement.description}</Card.Text>
+            <Card.Text>{reimbursement.description} </Card.Text>
             <Card.Text>created : ({formatDistance(createdAt, new Date())} ago)</Card.Text>
-            <Card.Text>{reimbursement.status} {resolvedAt? " : ("+formatDistance(resolvedAt, new Date()) +") ago" : ""} </Card.Text>
+            <Card.Text>{reimbursement.status} {resolvedAt? " : ("+formatDistance(resolvedAt, new Date()) +" ago)" : ""} </Card.Text>
           </Card.Body>
         </Card>
   );
