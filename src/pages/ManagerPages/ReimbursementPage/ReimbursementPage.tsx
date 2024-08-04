@@ -1,6 +1,9 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { __api_url } from "../../../utils/constants"
+import { Button, Card, Col, Container, Row } from "react-bootstrap"
+import MReimbursementItem from "../../../components/Reimbursement/ManagerReimbursement/MReimbursementItem"
+import { ReimbursementInterface } from "../../../components/Interfaces/ReimbursementInterface"
 
 
 
@@ -25,7 +28,6 @@ export const ReimbursementPage: React.FC = () => {
     
     //load whenver reimbursement updated
     useEffect( () => {
-
         console.log('- reimbursements -updated: ',reimbursements)
     },[reimbursements])
 
@@ -41,9 +43,27 @@ export const ReimbursementPage: React.FC = () => {
                 })
     }
 
+
     return(
         <>
+            <Container fluid>
 
+                <Row xs={1} md={3} className="g-3">
+
+                {
+
+                    reimbursements.map( (reimbItem) => {
+                        return (
+                            <Col>
+                                <MReimbursementItem reimbursement={reimbItem} />
+                            </Col>
+                        )
+                    })
+                }
+
+                    
+                </Row>
+            </Container>
         </>
     )
 }
