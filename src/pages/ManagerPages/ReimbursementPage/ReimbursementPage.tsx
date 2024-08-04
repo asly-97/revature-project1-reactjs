@@ -17,7 +17,9 @@ export const ReimbursementPage: React.FC = () => {
     const api = axios.create({
         baseURL: __api_url,
         headers:{
-            Authorization: `Bearer ${_token}`
+            Authorization: `Bearer ${_token}`,
+            //'Content-Type': 'application/json'
+            'Content-Type': 'text/plain'
         }
     })
 
@@ -43,6 +45,21 @@ export const ReimbursementPage: React.FC = () => {
                 })
     }
 
+    const resolveReimbursement = async (reimbId:number,newStatus:string) => {
+
+        
+        await api.patch(`/reimbursements/resolve/${reimbId}`,newStatus)
+                .then( response => {
+                    console.log('-- response -- ',response)
+
+                    //reload the reimbursements
+                    getAllReimbursements()
+                })
+                .catch(err => {
+                    console.log('-- error -- ',err)
+                })
+    }
+
 
     return(
         <>
@@ -55,7 +72,7 @@ export const ReimbursementPage: React.FC = () => {
                     reimbursements.map( (reimbItem) => {
                         return (
                             <Col>
-                                <MReimbursementItem reimbursement={reimbItem} />
+                                <MReimbursementItem reimbursement={reimbItem} onResolve={resolveReimbursement} />
                             </Col>
                         )
                     })
