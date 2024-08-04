@@ -20,7 +20,7 @@ export const Reimbursementpage: React.FC = () => {
         if(stored_token)
             setToken(stored_token);
         else
-            navigate('../login');
+            navigate('/login');
 
         api.get('/reimbursements')
             .then((response)=>{
