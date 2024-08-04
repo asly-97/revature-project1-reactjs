@@ -13,7 +13,7 @@ function MReimbursementItem(props:any) {
     color = 'success';
     resolvedAt = Date.parse(reimbursement.resolvedAt?.toString()+'');
   }
-  else if(reimbursement.status == 'declined'){
+  else if(reimbursement.status == 'denied'){
       color = 'danger';
       resolvedAt = Date.parse(reimbursement.resolvedAt?.toString()+'');
   }
