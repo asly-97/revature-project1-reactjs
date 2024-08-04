@@ -2,8 +2,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import '../../styles/Login.css';
 //already imported through React Bootstrap
-//import '../../styles/bootstrap.min.css';
+// import '../../styles/bootstrap.min.css';
 import { Link, useNavigate } from "react-router-dom";
+import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
 
 export default function() {
     const [message, setMessage] = useState("");
@@ -66,41 +67,79 @@ export default function() {
     });
 
     return(
-        <div className="container">
-    <div className="row justify-content-center">
-        <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
-        <div className="card border border-light-subtle rounded-3 shadow-sm">
-            <div className="card-body p-3 p-md-4 p-xl-5">
-            <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
-                <div className="row gy-2 overflow-hidden">
-                <div className="err_msg">{message}</div>
-                <div className="col-12">
-                    <div className="err_msg">{usernameMsg}</div>
-                    <div className="form-floating mb-3">
-                        <input className="form-control" name="username" id="username" placeholder="Usename" onChange={validate} />
-                        <label htmlFor="username" className="form-label">Username</label>
-                    </div>
-                </div>
-                <div className="col-12">
-                    <div className="err_msg">{passwordMsg}</div>
-                    <div className="form-floating mb-3">
-                        <input type="password" className="form-control" name="password" id="password" placeholder="Password"  onChange={validate} />
-                        <label htmlFor="password" className="form-label">Password</label>
-                    </div>
-                </div>
-                <div className="col-12">
-                    <div className="d-grid my-3">
-                        <button disabled={disableBtn} id={disableBtn?"disabled_btn":""} className="btn btn-primary btn-lg" type="submit" onClick={authenticate}>Log in</button>
-                    </div>
-                    <div className="col-12">
-                    <p className="m-0 text-secondary text-center">Don't have an account? <Link to="/signup" className="link-primary text-decoration-none">Sign up</Link></p>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    </div>
+        <Container>
+            <Card className="border border-light-subtle rounded-3 shadow-sm">
+                <Card.Body className="p-3 p-md-4 p-xl-5 q">
+                    <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
+                    <Col className="gy-2">
+                        <div className="err_msg">{message}</div>
+                        <Row>
+                            <div className="err_msg">{usernameMsg}</div>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Username</Form.Label>
+                                <Form.Control type="text" name="username" id="username" placeholder="Username" onChange={validate} />
+                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <div className="err_msg">{passwordMsg}</div>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" name="password" id="password" placeholder="Password" onChange={validate} />
+                            </Form.Group>
+                        </Row>
+                        <Row>
+                            <div className="d-grid my-3">
+                                <Button disabled={disableBtn} id={disableBtn ? "disabled_btn" : ""} variant="primary" size="lg" type="submit" onClick={authenticate}>
+                                    Log in
+                                </Button>
+                            </div>
+                            <Row>
+                                <p className="m-0 text-secondary text-center">
+                                    Don't have an account? <Link to="/signup" className="link-primary text-decoration-none">Sign up</Link>
+                                </p>
+                            </Row>
+                        </Row>
+                    </Col>
+                </Card.Body>
+            </Card>
+        </Container>
+
+
+    //     <div className="container">
+    // <div className="row justify-content-center">
+    //     <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+    //     <div className="card border border-light-subtle rounded-3 shadow-sm">
+    //         <div className="card-body p-3 p-md-4 p-xl-5">
+    //         <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
+    //             <div className="row gy-2 overflow-hidden">
+    //             <div className="err_msg">{message}</div>
+    //             <div className="col-12">
+    //                 <div className="err_msg">{usernameMsg}</div>
+    //                 <div className="form-floating mb-3">
+    //                     <input className="form-control" name="username" id="username" placeholder="Usename" onChange={validate} />
+    //                     <label htmlFor="username" className="form-label">Username</label>
+    //                 </div>
+    //             </div>
+    //             <div className="col-12">
+    //                 <div className="err_msg">{passwordMsg}</div>
+    //                 <div className="form-floating mb-3">
+    //                     <input type="password" className="form-control" name="password" id="password" placeholder="Password"  onChange={validate} />
+    //                     <label htmlFor="password" className="form-label">Password</label>
+    //                 </div>
+    //             </div>
+    //             <div className="col-12">
+    //                 <div className="d-grid my-3">
+    //                     <button disabled={disableBtn} id={disableBtn?"disabled_btn":""} className="btn btn-primary btn-lg" type="submit" onClick={authenticate}>Log in</button>
+    //                 </div>
+    //                 <div className="col-12">
+    //                 <p className="m-0 text-secondary text-center">Don't have an account? <Link to="/signup" className="link-primary text-decoration-none">Sign up</Link></p>
+    //                 </div>
+    //             </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    //     </div>
+    // </div>
+    // </div>
     );
 }
