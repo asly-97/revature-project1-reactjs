@@ -2,23 +2,53 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { Breadcrumb, Col, Container, Row } from 'react-bootstrap';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { LoggedInUserDetails, UserRole } from './Interfaces/LoggedInUserDetails';
+import { getLoggedInUserDetails, isUserLoggedIn } from './utils/LoggedInUserDetailsStore';
 
 function App() {
-
-  const[isLoggedIn,setLoggedIn] = useState(false)
+  const[userDetails,setUserDetails] = useState<LoggedInUserDetails>()
 
   const navigate = useNavigate()
   const location = useLocation();
 
-  useEffect(()=>{
+  useEffect(() => {
+    // Code to run on route change
+    console.log('Route changed!', location.pathname);
 
-    console.log(location)
-    //if the user isn't logged in, sent them to login page
-    if(!isLoggedIn && location.pathname == '/'){
-      navigate('/login')
+    if(location.pathname == '/'){
+      if(isUserLoggedIn()){
+        setUserDetails(getLoggedInUserDetails())
+  
+        if(userDetails?.role == UserRole.Manager){
+          navigate('manager/reimbursement')
+        }
+        else if(userDetails?.role == UserRole.Employee){
+          navigate('employee/home')
+        }
+        
+      }
+      //if the user isn't logged in, sent them to login page
+      else {
+        navigate('/login')
+      }
+  
+      console.log('LoggedUserDetails',userDetails);
+    }
+    else if(location.pathname == '/login' || location.pathname == '/signup'){
+      if(isUserLoggedIn()){
+        setUserDetails(getLoggedInUserDetails())
+  
+        if(userDetails?.role == UserRole.Manager){
+          navigate('manager/reimbursement')
+        }
+        else if(userDetails?.role == UserRole.Employee){
+          navigate('employee/home')
+        }
+        
+      }
     }
 
-  })
+  }, [location]);
 
 
   return (

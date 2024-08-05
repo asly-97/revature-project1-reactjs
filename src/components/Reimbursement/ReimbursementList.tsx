@@ -1,5 +1,5 @@
 import { CardGroup, Col, Row } from "react-bootstrap";
-import { ReimbursementInterface } from "../Interfaces/ReimbursementInterface";
+import { ReimbursementInterface } from "../../Interfaces/ReimbursementInterface";
 import ReimbursementItem from "./ReimbursementItem";
 
 export default (reimbursements:{reimbursementsList?:ReimbursementInterface[]})=>{
