@@ -32,6 +32,7 @@ function App() {
               <Breadcrumb.Item> <Link to="/">Home</Link> </Breadcrumb.Item>
               <Breadcrumb.Item> <Link to="/login">Login</Link> </Breadcrumb.Item>
               <Breadcrumb.Item> <Link to="/signup">Signup</Link> </Breadcrumb.Item>
+              <Breadcrumb.Item> <Link to="/employee/update_profile">update_info</Link> </Breadcrumb.Item>
             </Breadcrumb>
           </Col>
         </Row>

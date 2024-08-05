@@ -1,0 +1,14 @@
+.edit-btn{
+    float: right;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.err_msg{
+    color: red;
+    text-align: center;
+}
+
+#disabled_btn{
+    background-color: gray;
+}
