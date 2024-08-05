@@ -7,7 +7,7 @@ export interface UserInterface {
     role?:Role
 }
 
-interface Role{
+export interface Role{
     roleId?:number,
     name?:string
 }

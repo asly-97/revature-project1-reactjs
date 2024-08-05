@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import { formatDistance } from 'date-fns';
-import { ReimbursementInterface } from '../../Interfaces/ReimbursementInterface';
+import { ReimbursementInterface } from '../../../Interfaces/ReimbursementInterface';
 import { Button, Container, Row } from 'react-bootstrap';
 
 function MReimbursementItem(props:any) {

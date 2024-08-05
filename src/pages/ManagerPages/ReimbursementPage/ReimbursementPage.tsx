@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { __api_url } from "../../../utils/constants"
 import { Button, ButtonGroup, Card, Col, Container, Row, ToggleButton } from "react-bootstrap"
 import MReimbursementItem from "../../../components/Reimbursement/ManagerReimbursement/MReimbursementItem"
-import { ReimbursementInterface } from "../../../components/Interfaces/ReimbursementInterface"
+import { ReimbursementInterface } from "../../../Interfaces/ReimbursementInterface"
 
 
 const enum StatusFilter{

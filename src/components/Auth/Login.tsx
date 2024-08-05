@@ -5,6 +5,7 @@ import '../../styles/Login.css';
 // import '../../styles/bootstrap.min.css';
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { storeLoggedInUserDetails } from "../../utils/LoggedInUserDetailsStore";
 
 export default function() {
     const [message, setMessage] = useState("");
@@ -26,6 +27,10 @@ export default function() {
             .then(function (response) {
                 console.log('Response data: ',response.data);
                 localStorage.setItem("token",response.data.token);
+
+                //Save logged user details
+                storeLoggedInUserDetails(response.data.loggedInUserDetails)
+
                 if(response.data.role == 'Manager')
                     navigate('/manager/reimbursement');
                 else if(response.data.role == 'Employee')
@@ -38,6 +43,9 @@ export default function() {
                     setMessage("something went wrong.");
             })
     }
+
+
+    
 
     function validate(input:any){
         if(input.target.name == "username"){

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { redirect } from "react-router-dom";
-import { ReimbursementInterface } from "../components/Interfaces/ReimbursementInterface";
+import { ReimbursementInterface } from "../Interfaces/ReimbursementInterface";
 
 
 const reimbursementService = {
