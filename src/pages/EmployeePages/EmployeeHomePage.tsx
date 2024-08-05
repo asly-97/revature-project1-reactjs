@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReimbursementList from "../../components/Reimbursement/ReimbursementList";
 import { ReimbursementInterface } from "../../components/Interfaces/ReimbursementInterface";
-import { Row, Col, ButtonGroup, ToggleButton, Toast, Button } from "react-bootstrap";
+import { Row, Col, ButtonGroup, Button } from "react-bootstrap";
 
 
 export const EmployeeHomePage: React.FC = () => {
@@ -38,7 +38,7 @@ export const EmployeeHomePage: React.FC = () => {
                 baseURL: 'http://localhost:8080',
                 headers: {'Authorization': 'Bearer '+token}
             });
-            if(!value){
+            if(!value && filter){
                 setFilter(false);
                 api.get('/reimbursements')
                     .then((response)=>{
@@ -49,7 +49,7 @@ export const EmployeeHomePage: React.FC = () => {
                             navigate('/login');
                     });
             }
-            else{
+            else if(value && !filter){
                 setFilter(true);
                 api.get('/reimbursements/'+value)
                     .then((response)=>{
