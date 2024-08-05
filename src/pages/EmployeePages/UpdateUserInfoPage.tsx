@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { __api_url } from "../../utils/constants";
+import { isUserLoggedIn } from "../../utils/LoggedInUserDetailsStore";
 
 export default function UpdateUserInfoPage(){
 
@@ -20,12 +21,8 @@ export default function UpdateUserInfoPage(){
     const [disableBtn, setDisableBtn] = useState(true);
 
     const navigate = useNavigate();
-    
-    const token = localStorage.getItem('token');
 
-    if(!token)
-        navigate('/login')
-
+    const token = localStorage.getItem("token");
     const api = axios.create({
         baseURL: __api_url,
         headers: {'Authorization': 'Bearer '+token}
@@ -99,6 +96,11 @@ export default function UpdateUserInfoPage(){
     }
 
     useEffect(()=>{
+        if(!isUserLoggedIn()){
+            navigate('/login')
+            return
+        }
+
         if(firstName.length >= 2 && lastName.length >= 2 && username.length >= 3 && (password.length > 3 || password.length == 0))
             setDisableBtn(false);
         else

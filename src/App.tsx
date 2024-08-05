@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Breadcrumb, Col, Container, Row } from 'react-bootstrap';
+import { Breadcrumb, Button, Col, Container, Row } from 'react-bootstrap';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { LoggedInUserDetails, UserRole } from './Interfaces/LoggedInUserDetails';
 import { getLoggedInUserDetails, isUserLoggedIn } from './utils/LoggedInUserDetailsStore';
@@ -51,6 +51,12 @@ function App() {
   }, [location]);
 
 
+  function logout(){
+    localStorage.clear();
+    navigate('/login');
+  }
+
+
   return (
     <>
 
@@ -63,6 +69,7 @@ function App() {
               <Breadcrumb.Item> <Link to="/login">Login</Link> </Breadcrumb.Item>
               <Breadcrumb.Item> <Link to="/signup">Signup</Link> </Breadcrumb.Item>
               <Breadcrumb.Item> <Link to="/employee/update_profile">update_info</Link> </Breadcrumb.Item>
+              <Breadcrumb.Item> <Link to="#" onClick={logout}>Logout</Link> </Breadcrumb.Item>
             </Breadcrumb>
           </Col>
         </Row>
