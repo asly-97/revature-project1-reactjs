@@ -53,8 +53,10 @@ function ReimbursementItem(reimbursement:any) {
             })
             .catch((error) =>{
               setMsg('Something went wrong');
-                if(error.response?.status == 401)
-                    navigate('../login');
+              if(error.response?.status == 401){
+                localStorage.clear();
+                navigate('/login');
+              }
             });
       }
       else

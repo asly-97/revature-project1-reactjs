@@ -47,8 +47,10 @@ export default function UpdateUserInfoPage(){
             })
             .catch((error) =>{
                 if(error.response){
-                    if(error.response.status == 401)
-                        navigate('/login')
+                    if(error.response?.status == 401){
+                        localStorage.clear();
+                        navigate('/login');
+                    }
                     if(error.response.data.username)
                         setUsernameMsg(error.response.data.username);
                 }

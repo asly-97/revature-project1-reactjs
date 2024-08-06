@@ -30,8 +30,11 @@ export const EmployeeHomePage: React.FC = () => {
                 setReimbursements({reimbursementsList:response.data});
             })
             .catch((error) =>{
-                if(error.response?.status == 401)
-                    navigate('/login');
+                if(error.response?.status == 401){
+                    localStorage.clear(); // added this
+                    navigate('/login');  // because this was causing a loop
+// [/reimbursements(invalid token) -> /login -> logged in(but invalid token) -> employee/home -> /reimbursements]
+                }
             });
     },[]);
 
@@ -43,8 +46,10 @@ export const EmployeeHomePage: React.FC = () => {
                     setReimbursements({reimbursementsList:response.data});
                 })
                 .catch((error) =>{
-                    if(error.response?.status == 401)
+                    if(error.response?.status == 401){
+                        localStorage.clear();
                         navigate('/login');
+                    }
                 });
         }
         else if(value && !filter){
@@ -54,8 +59,10 @@ export const EmployeeHomePage: React.FC = () => {
                     setReimbursements({reimbursementsList:response.data});
                 })
                 .catch((error) =>{
-                    if(error.response?.status == 401)
+                    if(error.response?.status == 401){
+                        localStorage.clear();
                         navigate('/login');
+                    }
                 });
         }
     }
