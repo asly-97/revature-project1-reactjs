@@ -11,17 +11,18 @@ function App() {
   const navigate = useNavigate()
   const location = useLocation();
 
+  if(!userDetails)
+    setUserDetails(getLoggedInUserDetails());
+
+
   useEffect(() => {
     // Code to run on route change
     console.log('Route changed!', location.pathname);
 
-    if(!userDetails)
-      setUserDetails(getLoggedInUserDetails());
-
     if(location.pathname == '/'){
       // if(isUserLoggedIn()){
       //   setUserDetails(getLoggedInUserDetails())
-  
+
         if(userDetails?.role == UserRole.Manager){
           navigate('manager/reimbursement')
         }
@@ -63,7 +64,7 @@ console.log(userDetails)
   return (
     <>
 
-    {isUserLoggedIn()? <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="/">Some Title</Navbar.Brand>
         <Nav className="me-auto">
@@ -71,16 +72,17 @@ console.log(userDetails)
           <Nav.Link href="#link">Link</Nav.Link>
         </Nav>
         <Navbar.Toggle />
+        {isUserLoggedIn()?
         <Navbar.Collapse className="justify-content-end">
-          <DropdownButton id="dropdown-basic-button" variant='secondary' title={userDetails?.username}>
+          <DropdownButton id="dropdown-basic-button" variant='secondary' title={getLoggedInUserDetails()?.username}>
             <Dropdown.Item href="/">My Reimbursements</Dropdown.Item>
-            <Dropdown.Item href="/employee/update_profile">Update My Account</Dropdown.Item>
+            <Dropdown.Item href="/account/update_profile">Update My Account</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
           </DropdownButton>
-        </Navbar.Collapse>
+        </Navbar.Collapse>:""}
       </Container>
-    </Navbar>:""}
+    </Navbar>
     
 
       <Container fluid>

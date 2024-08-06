@@ -18,7 +18,7 @@ export const MainRouter = createBrowserRouter([
             { path: 'login', element: <LoginPage/> },
             { path: 'signup', element: <SignupPage/> },
             { path: 'employee/home', element: <EmployeeHomePage/> },
-            { path: 'employee/update_profile', element: <UpdateUserInfoPage/> },
+            { path: 'account/update_profile', element: <UpdateUserInfoPage/> },
             { path: 'manager/reimbursement', element: <ReimbursementPage/> },
             { path: 'manager/users', element: <UsersPage/> },
         ]
