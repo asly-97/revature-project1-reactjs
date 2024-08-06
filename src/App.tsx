@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Breadcrumb, Button, Col, Container, Row } from 'react-bootstrap';
+import { Breadcrumb, Button, Col, Container, Dropdown, DropdownButton, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { LoggedInUserDetails, UserRole } from './Interfaces/LoggedInUserDetails';
 import { getLoggedInUserDetails, isUserLoggedIn } from './utils/LoggedInUserDetailsStore';
@@ -15,9 +15,12 @@ function App() {
     // Code to run on route change
     console.log('Route changed!', location.pathname);
 
+    if(!userDetails)
+      setUserDetails(getLoggedInUserDetails());
+
     if(location.pathname == '/'){
-      if(isUserLoggedIn()){
-        setUserDetails(getLoggedInUserDetails())
+      // if(isUserLoggedIn()){
+      //   setUserDetails(getLoggedInUserDetails())
   
         if(userDetails?.role == UserRole.Manager){
           navigate('manager/reimbursement')
@@ -26,11 +29,11 @@ function App() {
           navigate('employee/home')
         }
         
-      }
+      // }
       //if the user isn't logged in, sent them to login page
-      else {
-        navigate('/login')
-      }
+      // else {
+      //   navigate('/login')
+      // }
   
       console.log('LoggedUserDetails',userDetails);
     }
@@ -56,9 +59,29 @@ function App() {
     navigate('/login');
   }
 
-
+console.log(userDetails)
   return (
     <>
+
+    {isUserLoggedIn()? <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Brand href="/">Some Title</Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="#link">Link</Nav.Link>
+        </Nav>
+        <Navbar.Toggle />
+        <Navbar.Collapse className="justify-content-end">
+          <DropdownButton id="dropdown-basic-button" variant='secondary' title={userDetails?.username}>
+            <Dropdown.Item href="/">My Reimbursements</Dropdown.Item>
+            <Dropdown.Item href="/employee/update_profile">Update My Account</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
+          </DropdownButton>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>:""}
+    
 
       <Container fluid>
         <Row className='justify-content-center'>
@@ -68,8 +91,6 @@ function App() {
               <Breadcrumb.Item> <Link to="/">Home</Link> </Breadcrumb.Item>
               <Breadcrumb.Item> <Link to="/login">Login</Link> </Breadcrumb.Item>
               <Breadcrumb.Item> <Link to="/signup">Signup</Link> </Breadcrumb.Item>
-              <Breadcrumb.Item> <Link to="/employee/update_profile">update_info</Link> </Breadcrumb.Item>
-              <Breadcrumb.Item> <Link to="#" onClick={logout}>Logout</Link> </Breadcrumb.Item>
             </Breadcrumb>
           </Col>
         </Row>

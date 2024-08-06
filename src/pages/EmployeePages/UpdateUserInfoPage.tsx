@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { __api_url } from "../../utils/constants";
-import { isUserLoggedIn } from "../../utils/LoggedInUserDetailsStore";
+import { getLoggedInUserDetails, isUserLoggedIn } from "../../utils/LoggedInUserDetailsStore";
 
 export default function UpdateUserInfoPage(){
 
@@ -107,21 +107,25 @@ export default function UpdateUserInfoPage(){
             setDisableBtn(true);
 
         if(userId < 0){
-            api.get('/user/me')
-            .then(function (response) {
-                setUserId(response.data.userId)
-                setFirstName(response.data.firstName);
-                setLastName(response.data.lastName);
-                setUsername(response.data.username);
-            })
-            .catch((error) =>{
-                if(error.response){
-                    if(error.response.status == 401)
-                        navigate('/login')
-                }
-                else
-                    setMessage("something went wrong.");
-            })
+            // api.get('/user/me')
+            // .then(function (response) {
+            //     setUserId(response.data.userId)
+            //     setFirstName(response.data.firstName);
+            //     setLastName(response.data.lastName);
+            //     setUsername(response.data.username);
+            // })
+            // .catch((error) =>{
+            //     if(error.response){
+            //         if(error.response.status == 401)
+            //             navigate('/login')
+            //     }
+            //     else
+            //         setMessage("something went wrong.");
+            // })
+            let userDetails = getLoggedInUserDetails();
+            setFirstName(userDetails.firstName as string);
+            setLastName(userDetails.lastName as string);
+            setUsername(userDetails.username as string);
         }
     });
     

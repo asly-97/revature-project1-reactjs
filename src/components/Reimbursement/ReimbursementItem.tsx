@@ -35,7 +35,7 @@ function ReimbursementItem(reimbursement:any) {
   const [disabled_btn, setDisableBtn] = useState(true);
   const navigate = useNavigate();
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {setDisableBtn(true); setMsg(''); setShow(false);}
   const handleShow = (id:number, description:string) => {setReimbID(id); setDescription(description); setShow(true);}
 
 
