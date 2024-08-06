@@ -123,6 +123,7 @@ export default function UpdateUserInfoPage(){
             //         setMessage("something went wrong.");
             // })
             let userDetails = getLoggedInUserDetails();
+            setUserId(1);
             setFirstName(userDetails.firstName as string);
             setLastName(userDetails.lastName as string);
             setUsername(userDetails.username as string);
