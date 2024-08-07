@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { __api_url } from "../../utils/constants";
 import { getLoggedInUserDetails, isUserLoggedIn, storeLoggedInUserDetails } from "../../utils/LoggedInUserDetailsStore";
 
-export default function UpdateUserInfoPage(){
+export default function UpdateUserInfoForm(){
 
     const [userId, setUserId] = useState(-1);
     const [message, setMessage] = useState("");
