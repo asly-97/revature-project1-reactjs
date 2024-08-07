@@ -4,7 +4,7 @@ import '../../styles/Login.css';
 //already imported through React Bootstrap
 // import '../../styles/bootstrap.min.css';
 import { Link, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Form, Spinner } from "react-bootstrap";
 import { storeLoggedInUserDetails } from "../../utils/LoggedInUserDetailsStore";
 
 export default function() {
@@ -14,6 +14,8 @@ export default function() {
     const [disableBtn, setDisableBtn] = useState(true);
     const [usernameMsg, setUsernameMsg] = useState("");
     const [passwordMsg, setPasswordMsg] = useState("");
+    
+    const [spin, setSpin] = useState(false);
 
     const navigate = useNavigate();
     
@@ -23,6 +25,7 @@ export default function() {
 
     function authenticate(){
         const body = {'username':username, 'password':password};
+        setSpin(true);
         api.post('/authenticate', body)
             .then(function (response) {
                 console.log('Response data: ',response.data);
@@ -42,6 +45,9 @@ export default function() {
                 else // if there was no response
                     setMessage("something went wrong.");
             })
+            .finally(()=>{
+                setSpin(false);
+            });
     }
 
 
@@ -80,6 +86,7 @@ export default function() {
                 <Card.Body className="p-3 p-md-4 p-xl-5 q">
                     <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
                     <Col className="gy-2">
+                        {spin && <center><Spinner animation="border" /></center>}
                         <div className="err_msg">{message}</div>
                         <Row>
                             <div className="err_msg">{usernameMsg}</div>
