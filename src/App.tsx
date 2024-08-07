@@ -72,13 +72,13 @@ console.log(userDetails)
           <Link className='nav-link' to="/login">Home</Link> 
           <Link className='nav-link' to="/login">Login</Link> 
           <Link className='nav-link' to="/signup">Signup</Link>
-          <Link className='nav-link' to="/manager/users">Users</Link>
+          {getLoggedInUserDetails()?.role == UserRole.Manager && <Link className='nav-link' to="/manager/users">Users</Link>}
         </Nav>
         <Navbar.Toggle />
         {isUserLoggedIn() &&
         <Navbar.Collapse className="justify-content-end">
           <DropdownButton id="dropdown-basic-button" variant='secondary' title={getLoggedInUserDetails()?.username}>
-            <Dropdown.Item href="/">My Reimbursements</Dropdown.Item>
+            <Dropdown.Item href="/">Reimbursements</Dropdown.Item>
             <Dropdown.Item href="/account/update_profile">Update My Account</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
@@ -90,7 +90,7 @@ console.log(userDetails)
 
       <Container fluid>
         <Row className='justify-content-center'>
-          <Col xs='10'>
+          <Col xs='auto'>
             { /** Rendered page automatically goes here */  }
             <Outlet />
           </Col>
