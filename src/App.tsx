@@ -68,8 +68,11 @@ console.log(userDetails)
       <Container>
         <Navbar.Brand href="/">Some Title</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
+          {/** <Nav.Link href="/">Home</Nav.Link> */}
+          <Link className='nav-link' to="/login">Home</Link> 
+          <Link className='nav-link' to="/login">Login</Link> 
+          <Link className='nav-link' to="/signup">Signup</Link>
+          <Link className='nav-link' to="/manager/users">Users</Link>
         </Nav>
         <Navbar.Toggle />
         {isUserLoggedIn()?
@@ -87,17 +90,7 @@ console.log(userDetails)
 
       <Container fluid>
         <Row className='justify-content-center'>
-          <Col xs='auto' >
-            { /** This routes navigator is temporairily */  }
-            <Breadcrumb>
-              <Breadcrumb.Item> <Link to="/">Home</Link> </Breadcrumb.Item>
-              <Breadcrumb.Item> <Link to="/login">Login</Link> </Breadcrumb.Item>
-              <Breadcrumb.Item> <Link to="/signup">Signup</Link> </Breadcrumb.Item>
-            </Breadcrumb>
-          </Col>
-        </Row>
-        <Row className='justify-content-center'>
-          <Col xs='auto'>
+          <Col xs='10'>
             { /** Rendered page automatically goes here */  }
             <Outlet />
           </Col>
