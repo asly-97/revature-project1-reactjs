@@ -1,10 +1,9 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { __api_url } from "../../../utils/constants"
-import { Button, ButtonGroup, Card, Col, Container, Row, ToggleButton } from "react-bootstrap"
+import { ButtonGroup, Col, Container, Row, ToggleButton } from "react-bootstrap"
 import MReimbursementItem from "../../../components/Reimbursement/ManagerReimbursement/MReimbursementItem"
-import { ReimbursementInterface } from "../../../Interfaces/ReimbursementInterface"
-import { Employee } from "../../../Interfaces/Employee"
+import '../../../styles/reimbursementList.css'
 
 
 const enum StatusFilter{
@@ -143,21 +142,15 @@ export const ReimbursementPage: React.FC = () => {
                     </Col>
                 </Row>
 
-                <Row xs={2} md={3} className="g-5">
-
                 {
-
-                    reimbursements.map( (reimbItem) => {
-                        return (
-                            <Col>
+                    <div className="cards_container">
+                        {reimbursements.map((reimbItem) => (
+                            <div>
                                 <MReimbursementItem reimbursement={reimbItem} onResolve={resolveReimbursement} />
-                            </Col>
-                        )
-                    })
+                            </div>
+                        ))}
+                    </div>
                 }
-
-                    
-                </Row>
             </Container>
         </>
     )

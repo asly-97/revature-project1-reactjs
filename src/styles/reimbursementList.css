@@ -1,0 +1,8 @@
+.cards_container {
+    display: grid;
+    /* justify-content: space-evenly; */
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    grid-column-gap: 4rem;
+    grid-row-gap: 2rem;
+}
