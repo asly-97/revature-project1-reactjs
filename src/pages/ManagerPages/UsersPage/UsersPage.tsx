@@ -3,11 +3,12 @@ import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap"
 import { __api_url } from "../../../utils/constants"
 import { useEffect, useState } from "react"
 import { Employee } from "../../../Interfaces/Employee"
-import { DeleteEmployeeModal } from "./DeleteEmployeeModal"
+import { ConfirmationModal } from "../../../components/ConfirmationModal/CofirmationModal"
 
 interface EmployeeToDelete {
     userId?:number,
-    username?:string,
+    firstName?:string,
+    lastName?:string,
 }
 
 export const UsersPage: React.FC = () => {
@@ -17,6 +18,10 @@ export const UsersPage: React.FC = () => {
     //Employee to be deleted
     const [employeeToDelete,setEmployeeToDelete] = useState<EmployeeToDelete|null>(null)
     const [modalVisibility,setModalVisibility] = useState(false)
+    //Confirmation message
+    const deleteConfirmationMessage = () => `Please confirm: Are you sure you want to delete 
+    <strong>${employeeToDelete?.firstName} ${employeeToDelete?.lastName}</strong> from the employee list? 
+    This action cannot be undone.`
 
     const _token = localStorage.getItem('token')
 
@@ -74,10 +79,11 @@ export const UsersPage: React.FC = () => {
                 .catch(err => console.log(err))
     }
 
-    const showDeleteModal = (emp:Employee) => {
+    const showDeleteModal = (employee:Employee) => {
         setEmployeeToDelete({
-            userId: emp.userId,
-            username: emp.username
+            userId: employee.userId,
+            firstName: employee.firstName,
+            lastName: employee.lastName,
         })
         
         setModalVisibility(true)
@@ -88,7 +94,68 @@ export const UsersPage: React.FC = () => {
         setEmployeeToDelete(null)
         setModalVisibility(false)
     }
+
+
+
+
+
+
+    /**
+     * ------- Promote to Manger related ----------
+     */
     
+    const [promotionModalVisibility,setPromotionModalVisibility] = useState(false);
+    const [employeeToPromote,setEmployeeToPromote] = useState<Employee|null>()
+    const promoteConfirmationMessage = () => `Please confirm: Are you certain you want to 
+    promote <strong>${employeeToPromote?.firstName} ${employeeToPromote?.lastName}</strong> to the manager position?`
+
+    const showPromotionModal = (
+        //Employee to be promoted to Manager
+        employee:Employee
+    ) => {
+        setEmployeeToPromote({...employee})
+        setPromotionModalVisibility(true)
+    }
+
+    const closePromotionModal = () => {
+        setPromotionModalVisibility(false)
+        setEmployeeToPromote(null)
+    }
+
+    const apiPromoteToManager = async () => (
+        await api.patch(
+                `/user/${employeeToPromote?.userId}`,
+                {
+                    role: 'Manager'
+                }
+                )
+                .then(res => {
+                    if(res.status == 200){
+                        console.log('Employee promoted to Manager')
+                        console.log(res.data)
+                        //re-load employess 
+                        getAllEmployees()
+                    }
+                })
+                .catch(err => console.log(err))
+    )
+
+
+
+    /**
+     * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     */
+
+
+
+
+
+
+
+
+    /**
+     * ------- RETURN USERS PAGE COMPONENET ----------
+     */
 
     return(
         <Container style={{width:'700px'}}>
@@ -114,7 +181,7 @@ export const UsersPage: React.FC = () => {
                                         <td>{emp.lastName}</td>
                                         <td>@{emp.username}</td>
                                         <td align="center">
-                                            <Button size="sm" variant="primary" className="mb-2">Make Manager</Button><br/>
+                                            <Button size="sm" variant="primary" className="mb-2" onClick={()=>showPromotionModal(emp)}>Promote to Manager</Button><br/>
                                             <Button size="sm" variant="danger" onClick={()=>showDeleteModal(emp)}>Delete User</Button>
                                         </td>
             
@@ -127,10 +194,21 @@ export const UsersPage: React.FC = () => {
                 </Col>
             </Row>
 
-            <DeleteEmployeeModal show={modalVisibility} 
-                                username={employeeToDelete?.username}
+            <ConfirmationModal 
+                                key={'deleteEmployeeModal'}
+                                show={modalVisibility} 
+                                title='Delete Employee'
+                                message={deleteConfirmationMessage()}
                                 handleClose={closeDeleteModal}
-                                handleDelete={apiDeleteEmployee}/>
+                                handleConfirm={apiDeleteEmployee}/>
+
+            <ConfirmationModal 
+                                key='promoteManagerModal'
+                                show = {promotionModalVisibility}
+                                title = 'Promote to Manager'
+                                message={promoteConfirmationMessage()}
+                                handleClose={closePromotionModal}
+                                handleConfirm={apiPromoteToManager}/>
         </Container>
     )
 }
