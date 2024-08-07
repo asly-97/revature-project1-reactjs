@@ -5,30 +5,18 @@ import { useEffect, useState } from "react"
 import { Employee } from "../../../Interfaces/Employee"
 import { DeleteEmployeeModal } from "./DeleteEmployeeModal"
 
+interface EmployeeToDelete {
+    userId?:number,
+    username?:string,
+}
+
 export const UsersPage: React.FC = () => {
 
     const [employees,setEmployees] = useState<Employee[]>()
 
-    //Modal - delete employee
-    const [show, setShow] = useState(false);
-    const handleClose = () => {
-        setShow(false);
-        resetModal();
-    }
-
-    const showModal = (userId:any,username:any) => {
-        setEmpUserId(userId)
-        setEmpUsername(username)
-        setShow(true)
-    }
-
-    const resetModal = () => {
-        setEmpUserId('');
-        setEmpUsername('');
-    }
-
-    const [empUsername,setEmpUsername] = useState('')
-    const [empUserId,setEmpUserId] = useState('')
+    //Employee to be deleted
+    const [employeeToDelete,setEmployeeToDelete] = useState<EmployeeToDelete|null>(null)
+    const [modalVisibility,setModalVisibility] = useState(false)
 
     const _token = localStorage.getItem('token')
 
@@ -63,8 +51,18 @@ export const UsersPage: React.FC = () => {
                 })
     }
 
-    const apiDeleteEmployee = async (userId:any) => {
-        await api.delete(`/user/${userId}`)
+    useEffect(()=>{
+        getAllEmployees()
+    },[])
+
+    
+    useEffect(()=>{
+        console.log('--- State changed --')
+        console.log(employees)
+    })
+
+    const apiDeleteEmployee = async () => {
+        await api.delete(`/user/${employeeToDelete?.userId}`)
                 .then(res => {
                     if(res.status == 200){
                         console.log('user deleted successfully')
@@ -76,15 +74,21 @@ export const UsersPage: React.FC = () => {
                 .catch(err => console.log(err))
     }
 
-    useEffect(()=>{
-        getAllEmployees()
-    },[])
+    const showDeleteModal = (emp:Employee) => {
+        setEmployeeToDelete({
+            userId: emp.userId,
+            username: emp.username
+        })
+        
+        setModalVisibility(true)
 
+    }
+
+    const closeDeleteModal = () => {
+        setEmployeeToDelete(null)
+        setModalVisibility(false)
+    }
     
-    useEffect(()=>{
-        console.log('--- State changed --')
-        console.log(employees)
-    })
 
     return(
         <Container>
@@ -111,7 +115,7 @@ export const UsersPage: React.FC = () => {
                                         <td>@{emp.username}</td>
                                         <td align="center">
                                             <Button size="sm" variant="primary" className="mb-2">Make Manager</Button><br/>
-                                            <Button size="sm" variant="danger" onClick={()=>showModal(emp.userId,emp.username)}>Delete User</Button>
+                                            <Button size="sm" variant="danger" onClick={()=>showDeleteModal(emp)}>Delete User</Button>
                                         </td>
             
                                     </tr>
@@ -123,25 +127,10 @@ export const UsersPage: React.FC = () => {
                 </Col>
             </Row>
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                <Modal.Title>Delele employee</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>{`Please confirm the deletion of the employee with the username @${empUsername}.`}</Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Cancel
-                </Button>
-                <Button variant="danger" onClick={()=>{
-                    handleClose();
-                    //delete employee
-                    apiDeleteEmployee(empUserId);
-                    resetModal();
-                }}>
-                    Confirm
-                </Button>
-                </Modal.Footer>
-            </Modal>
+            <DeleteEmployeeModal show={modalVisibility} 
+                                username={employeeToDelete?.username}
+                                handleClose={closeDeleteModal}
+                                handleDelete={apiDeleteEmployee}/>
         </Container>
     )
 }

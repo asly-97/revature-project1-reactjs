@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap"
 
-export const DeleteEmployeeModal: React.FC<any> = ({showModal,empUsername,onConfirm}) =>{
+interface DeleteEmployeeModalProps {
+  show: boolean;
+  username?: string;
+  handleClose: () => void;
+  handleDelete: () => void;
+}
 
-    const [show, setShow] = useState(false);
+export const DeleteEmployeeModal: React.FC<DeleteEmployeeModalProps> = ({show, username, handleClose, handleDelete }) =>{
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    useEffect(()=>{
-        if(showModal){
-            handleShow()
-        }
-    },[showModal])
+    const onConfirmDelete = () => {
+      handleDelete()
+      handleClose()
+    }
 
     return (
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Delele employee</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{`Please confirm the deletion of the employee with the username @${empUsername}.`}</Modal.Body>
+        <Modal.Body>{`Please confirm the deletion of the employee with the username @${username}.`}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="danger" onClick={()=>{
-            handleClose();
-            onConfirm();
-          }}>
+          <Button variant="danger" onClick={onConfirmDelete}>
             Confirm
           </Button>
         </Modal.Footer>
