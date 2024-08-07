@@ -6,6 +6,7 @@ import { EmployeeHomePage } from "../pages/EmployeePages/EmployeeHomePage";
 import { ReimbursementPage } from "../pages/ManagerPages/ReimbursementPage/ReimbursementPage";
 import { UsersPage } from "../pages/ManagerPages/UsersPage/UsersPage";
 import UpdateUserInfoForm from "../components/User/UpdateUserInfoForm";
+import ReimbursementForm from "../components/Reimbursement/ReimbursementForm";
 
 
 export const MainRouter = createBrowserRouter([
@@ -17,6 +18,7 @@ export const MainRouter = createBrowserRouter([
             { path: 'login', element: <LoginPage/> },
             { path: 'signup', element: <SignupPage/> },
             { path: 'employee/home', element: <EmployeeHomePage/> },
+            { path: 'employee/create_reimbursement', element: <ReimbursementForm/> },
             { path: 'account/update_profile', element: <UpdateUserInfoForm/> },
             { path: 'manager/reimbursement', element: <ReimbursementPage/> },
             { path: 'manager/users', element: <UsersPage/> },

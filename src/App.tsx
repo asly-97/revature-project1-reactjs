@@ -69,10 +69,17 @@ console.log(userDetails)
         <Navbar.Brand href="/">Some Title</Navbar.Brand>
         <Nav className="me-auto">
           {/** <Nav.Link href="/">Home</Nav.Link> */}
-          <Link className='nav-link' to="/login">Home</Link> 
-          <Link className='nav-link' to="/login">Login</Link> 
-          <Link className='nav-link' to="/signup">Signup</Link>
-          {getLoggedInUserDetails()?.role == UserRole.Manager && <Link className='nav-link' to="/manager/users">Users</Link>}
+          <Link className='nav-link' to="/login">Home</Link>
+
+          {!isUserLoggedIn() && <>
+            <Link className='nav-link' to="/login">Login</Link> 
+            <Link className='nav-link' to="/signup">Signup</Link>
+          </>}
+
+          {isUserLoggedIn() && <>
+            {getLoggedInUserDetails()?.role == UserRole.Manager && <Link className='nav-link' to="/manager/users">Users</Link>}
+            {getLoggedInUserDetails()?.role == UserRole.Employee && <Link className='nav-link' to="/employee/create_reimbursement">Create Reimbursement</Link>}
+          </>}
         </Nav>
         <Navbar.Toggle />
         {isUserLoggedIn() &&
