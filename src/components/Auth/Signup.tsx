@@ -83,7 +83,7 @@ export const Signup: React.FC = () => {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Username</Form.Label>
-                <Form.Control name="username" onChange={onInputValueChanged}  type="text" placeholder="Enter email" />
+                <Form.Control name="username" onChange={onInputValueChanged}  type="text" placeholder="Enter Username" />
                 <Form.Text className="text-muted">
                 Please choose a unique username.
                 </Form.Text>

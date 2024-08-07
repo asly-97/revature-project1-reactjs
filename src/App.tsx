@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Breadcrumb, Button, Col, Container, Dropdown, DropdownButton, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
+import { Col, Container, Dropdown, DropdownButton, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { LoggedInUserDetails, UserRole } from './Interfaces/LoggedInUserDetails';
 import { getLoggedInUserDetails, isUserLoggedIn } from './utils/LoggedInUserDetailsStore';
@@ -20,8 +20,8 @@ function App() {
     console.log('Route changed!', location.pathname);
 
     if(location.pathname == '/'){
-      // if(isUserLoggedIn()){
-      //   setUserDetails(getLoggedInUserDetails())
+      if(isUserLoggedIn()){
+        // setUserDetails(getLoggedInUserDetails())
 
         if(userDetails?.role == UserRole.Manager){
           navigate('manager/reimbursement')
@@ -30,11 +30,11 @@ function App() {
           navigate('employee/home')
         }
         
-      // }
+      }
       //if the user isn't logged in, sent them to login page
-      // else {
-      //   navigate('/login')
-      // }
+      else {
+        navigate('/login')
+      }
   
       console.log('LoggedUserDetails',userDetails);
     }
@@ -64,33 +64,40 @@ console.log(userDetails)
   return (
     <>
 
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" bg='dark' data-bs-theme="dark" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="/">Some Title</Navbar.Brand>
         <Nav className="me-auto">
           {/** <Nav.Link href="/">Home</Nav.Link> */}
-          <Link className='nav-link' to="/login">Home</Link> 
-          <Link className='nav-link' to="/login">Login</Link> 
-          <Link className='nav-link' to="/signup">Signup</Link>
-          <Link className='nav-link' to="/manager/users">Users</Link>
+          <Link className='nav-link' to="/login">Home</Link>
+
+          {!isUserLoggedIn() && <>
+            <Link className='nav-link' to="/login">Login</Link> 
+            <Link className='nav-link' to="/signup">Signup</Link>
+          </>}
+
+          {isUserLoggedIn() && <>
+            {getLoggedInUserDetails()?.role == UserRole.Manager && <Link className='nav-link' to="/manager/users">Users</Link>}
+            {getLoggedInUserDetails()?.role == UserRole.Employee && <Link className='nav-link' to="/employee/create_reimbursement">Create Reimbursement</Link>}
+          </>}
         </Nav>
         <Navbar.Toggle />
-        {isUserLoggedIn()?
+        {isUserLoggedIn() &&
         <Navbar.Collapse className="justify-content-end">
           <DropdownButton id="dropdown-basic-button" variant='secondary' title={getLoggedInUserDetails()?.username}>
-            <Dropdown.Item href="/">My Reimbursements</Dropdown.Item>
+            <Dropdown.Item href="/">Reimbursements</Dropdown.Item>
             <Dropdown.Item href="/account/update_profile">Update My Account</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
           </DropdownButton>
-        </Navbar.Collapse>:""}
+        </Navbar.Collapse>}
       </Container>
     </Navbar>
     
 
       <Container fluid>
         <Row className='justify-content-center'>
-          <Col xs='10'>
+          <Col xs='auto'>
             { /** Rendered page automatically goes here */  }
             <Outlet />
           </Col>

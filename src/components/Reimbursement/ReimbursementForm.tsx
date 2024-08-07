@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
+import { Container, Card, Col, Row, Form, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { __api_url } from "../../utils/constants";
+import { isUserLoggedIn } from "../../utils/LoggedInUserDetailsStore";
 
 export default ()=>{
 
@@ -13,28 +14,29 @@ export default ()=>{
     const [descriptionMsg, setDescriptionMsg] = useState("");
     const [amountMsg, setAmountMsg] = useState("");
 
+    const [spin, setSpin] = useState(false);
+
     const navigate = useNavigate();
     
     const token = localStorage.getItem('token');
-
-    if(!token)
-        navigate('/login')
-
     const api = axios.create({
         baseURL: __api_url,
         headers: {'Authorization': 'Bearer '+token}
     });
 
     function createReimbursement(){
+        setSpin(true);
         const body = {'description':description, 'amount':amount};
         api.post('/reimbursements', body)
             .then(function (response) {
-                // navigate('') // somewhere
+                navigate('/employee/home')
             })
             .catch((error) =>{
                 if(error.response){
-                    if(error.response.status == 401)
-                        navigate('/login')
+                    if(error.response.status == 401){
+                        localStorage.clear();
+                        navigate('/login');
+                    }
                     if(error.response.data.amount)
                         setAmountMsg(error.response.data.amount);
                     if(error.response.data.description)
@@ -43,6 +45,7 @@ export default ()=>{
                 else
                     setMessage("something went wrong.");
             })
+            .finally(()=>{setSpin(false)})
     }
 
     function validate(input:any){
@@ -66,6 +69,12 @@ export default ()=>{
     }
 
     useEffect(()=>{
+
+        if(!isUserLoggedIn()){
+            navigate('/login')
+            return
+        }
+
         if(description.length > 3 && amount.length > 0)
             setDisableBtn(false);
         else
@@ -74,11 +83,12 @@ export default ()=>{
     
 
     return(
-        <Container>
+        <Container style={{marginTop:'10%'}}>
             <Card className="border border-light-subtle rounded-3 shadow-sm">
                 <Card.Body className="p-3 p-md-4 p-xl-5 q">
                     <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Create new Reimbursement</h2>
                     <Col className="gy-2">
+                        {spin && <center><Spinner animation="border" /></center>}
                         <div className="err_msg">{message}</div>
                         <Row>
                             <div className="err_msg">{descriptionMsg}</div>
