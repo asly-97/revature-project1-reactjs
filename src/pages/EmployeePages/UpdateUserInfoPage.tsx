@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Container, Card, Col, Row, Form, Button } from "react-bootstrap";
+import { Container, Card, Col, Row, Form, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { __api_url } from "../../utils/constants";
-import { getLoggedInUserDetails, isUserLoggedIn } from "../../utils/LoggedInUserDetailsStore";
+import { getLoggedInUserDetails, isUserLoggedIn, storeLoggedInUserDetails } from "../../utils/LoggedInUserDetailsStore";
 
 export default function UpdateUserInfoPage(){
 
@@ -20,6 +20,8 @@ export default function UpdateUserInfoPage(){
     const [passwordMsg, setPasswordMsg] = useState("");
     const [disableBtn, setDisableBtn] = useState(true);
 
+    const [spin, setSpin] = useState(false);
+
     const navigate = useNavigate();
 
     const token = localStorage.getItem("token");
@@ -29,6 +31,7 @@ export default function UpdateUserInfoPage(){
     });
 
     function update_info(){
+        setSpin(true);
         let body1 = {'firstName':firstName, 'lastName':lastName,
             'username':username
         };
@@ -44,6 +47,7 @@ export default function UpdateUserInfoPage(){
         api.patch('/user', body)
             .then(function (response) {
                 setMessage("success");
+                storeLoggedInUserDetails(response.data);
             })
             .catch((error) =>{
                 if(error.response){
@@ -57,6 +61,7 @@ export default function UpdateUserInfoPage(){
                 else
                     setMessage("something went wrong.");
             })
+            .finally(()=>{setSpin(false)})
     }
 
     function validate(input:any){
@@ -139,6 +144,7 @@ export default function UpdateUserInfoPage(){
                 <Card.Body className="p-3 p-md-4 p-xl-5 q">
                     <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Update Account Info</h2>
                     <Col className="gy-2">
+                        {spin && <center><Spinner animation="border" /></center>}   
                         <div className="err_msg">{message}</div>
                         <Row>
                             <div className="err_msg">{firstNameMsg}</div>

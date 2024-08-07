@@ -20,8 +20,8 @@ function App() {
     console.log('Route changed!', location.pathname);
 
     if(location.pathname == '/'){
-      // if(isUserLoggedIn()){
-      //   setUserDetails(getLoggedInUserDetails())
+      if(isUserLoggedIn()){
+        // setUserDetails(getLoggedInUserDetails())
 
         if(userDetails?.role == UserRole.Manager){
           navigate('manager/reimbursement')
@@ -30,11 +30,11 @@ function App() {
           navigate('employee/home')
         }
         
-      // }
+      }
       //if the user isn't logged in, sent them to login page
-      // else {
-      //   navigate('/login')
-      // }
+      else {
+        navigate('/login')
+      }
   
       console.log('LoggedUserDetails',userDetails);
     }
@@ -64,7 +64,7 @@ console.log(userDetails)
   return (
     <>
 
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" bg='dark' data-bs-theme="dark" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="/">Some Title</Navbar.Brand>
         <Nav className="me-auto">
@@ -72,7 +72,7 @@ console.log(userDetails)
           <Nav.Link href="#link">Link</Nav.Link>
         </Nav>
         <Navbar.Toggle />
-        {isUserLoggedIn()?
+        {isUserLoggedIn() &&
         <Navbar.Collapse className="justify-content-end">
           <DropdownButton id="dropdown-basic-button" variant='secondary' title={getLoggedInUserDetails()?.username}>
             <Dropdown.Item href="/">My Reimbursements</Dropdown.Item>
@@ -80,7 +80,7 @@ console.log(userDetails)
             <Dropdown.Divider />
             <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
           </DropdownButton>
-        </Navbar.Collapse>:""}
+        </Navbar.Collapse>}
       </Container>
     </Navbar>
     
