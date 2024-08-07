@@ -91,9 +91,9 @@ export const UsersPage: React.FC = () => {
     
 
     return(
-        <Container>
+        <Container style={{width:'700px'}}>
             <Row className="justify-content-center mt-5">
-                <Col xs={10} className="bg-blue">
+                <Col xs={12} className="bg-blue">
                 <Table striped bordered hover>
                     <thead>
                         <tr>
