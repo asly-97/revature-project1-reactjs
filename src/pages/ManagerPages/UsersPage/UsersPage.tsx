@@ -1,12 +1,34 @@
 import axios from "axios"
-import { Button, Col, Container, Row, Table } from "react-bootstrap"
+import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap"
 import { __api_url } from "../../../utils/constants"
 import { useEffect, useState } from "react"
 import { Employee } from "../../../Interfaces/Employee"
+import { DeleteEmployeeModal } from "./DeleteEmployeeModal"
 
 export const UsersPage: React.FC = () => {
 
     const [employees,setEmployees] = useState<Employee[]>()
+
+    //Modal - delete employee
+    const [show, setShow] = useState(false);
+    const handleClose = () => {
+        setShow(false);
+        resetModal();
+    }
+
+    const showModal = (userId:any,username:any) => {
+        setEmpUserId(userId)
+        setEmpUsername(username)
+        setShow(true)
+    }
+
+    const resetModal = () => {
+        setEmpUserId('');
+        setEmpUsername('');
+    }
+
+    const [empUsername,setEmpUsername] = useState('')
+    const [empUserId,setEmpUserId] = useState('')
 
     const _token = localStorage.getItem('token')
 
@@ -20,8 +42,8 @@ export const UsersPage: React.FC = () => {
     const getAllEmployees = async () => {
         await api.get('/user')
                 .then( ({data}) => {
-                    console.log('--- Employees DATA -- ')
-                    console.log(data)
+
+
                     let empList:Employee[] = [];
                     let dataArr:Employee[] = data;
 
@@ -34,9 +56,24 @@ export const UsersPage: React.FC = () => {
                         })
                     })
 
-                    console.log('empList',empList)
                     setEmployees(empList)
                 } )
+                .catch((err)=>{
+                    console.log('err',err)
+                })
+    }
+
+    const apiDeleteEmployee = async (userId:any) => {
+        await api.delete(`/user/${userId}`)
+                .then(res => {
+                    if(res.status == 200){
+                        console.log('user deleted successfully')
+                        console.log(res.data)
+                        //re-load employess 
+                        getAllEmployees()
+                    }
+                })
+                .catch(err => console.log(err))
     }
 
     useEffect(()=>{
@@ -45,7 +82,7 @@ export const UsersPage: React.FC = () => {
 
     
     useEffect(()=>{
-        console.log('State changed - employees')
+        console.log('--- State changed --')
         console.log(employees)
     })
 
@@ -74,8 +111,9 @@ export const UsersPage: React.FC = () => {
                                         <td>@{emp.username}</td>
                                         <td align="center">
                                             <Button size="sm" variant="primary" className="mb-2">Make Manager</Button><br/>
-                                            <Button size="sm" variant="danger">Delete User</Button>
+                                            <Button size="sm" variant="danger" onClick={()=>showModal(emp.userId,emp.username)}>Delete User</Button>
                                         </td>
+            
                                     </tr>
                                 )
                             })
@@ -84,6 +122,26 @@ export const UsersPage: React.FC = () => {
                     </Table>
                 </Col>
             </Row>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>Delele employee</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{`Please confirm the deletion of the employee with the username @${empUsername}.`}</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button variant="danger" onClick={()=>{
+                    handleClose();
+                    //delete employee
+                    apiDeleteEmployee(empUserId);
+                    resetModal();
+                }}>
+                    Confirm
+                </Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     )
 }
