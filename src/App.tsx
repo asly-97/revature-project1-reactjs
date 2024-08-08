@@ -95,7 +95,7 @@ console.log(userDetails)
     </Navbar>
     
 
-      <Container fluid>
+      <Container fluid className='mt-5'>
         <Row className='justify-content-center'>
           <Col xs='auto'>
             { /** Rendered page automatically goes here */  }
