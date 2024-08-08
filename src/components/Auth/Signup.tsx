@@ -67,45 +67,60 @@ export const Signup: React.FC = () => {
     }
 
     return(
-        <Card style={{ width: '24rem' }}>
+        <Card className="mb-5" >
         <Card.Body>
         <Form>
-            <Form.Group className="mb-3" controlId="formFirstName">
-                <Form.Label>First name</Form.Label>
-                <Form.Control name='firstName' onChange={onInputValueChanged} type="text" placeholder="Enter first name"  />
-            </Form.Group>
+            <Row>
+                <Col>
+                    <Form.Group className="mb-3" controlId="formFirstName">
+                        <Form.Label>First name</Form.Label>
+                        <Form.Control name='firstName' onChange={onInputValueChanged} type="text" placeholder="Enter first name"  />
+                    </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formLastName">
-                <Form.Label>Last name</Form.Label>
-                <Form.Control name="lastName" onChange={onInputValueChanged}  type="text" placeholder="Enter last name" />
-            </Form.Group>
+                    <Form.Group className="mb-3" controlId="formLastName">
+                        <Form.Label>Last name</Form.Label>
+                        <Form.Control name="lastName" onChange={onInputValueChanged}  type="text" placeholder="Enter last name" />
+                    </Form.Group>
+                </Col>
 
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Username</Form.Label>
-                <Form.Control name="username" onChange={onInputValueChanged}  type="text" placeholder="Enter Username" />
-                <Form.Text className="text-muted">
-                Please choose a unique username.
-                </Form.Text>
-            </Form.Group>
+                <Col>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control name="username" onChange={onInputValueChanged}  type="text" placeholder="Enter Username" />
+                    </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control name="password" onChange={onInputValueChanged}  type="password" placeholder="Password" />
-            </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control name="password" onChange={onInputValueChanged}  type="password" placeholder="Password" />
+                    </Form.Group>
+                </Col>
+            </Row>
 
-            <Alert key='warning' variant='warning' show={showAlertMessage}>
-                {alertMessage}
-            </Alert>
+            <Row className="justify-content-center">
+                <Col sm={9}>
+                    <Alert key='warning' variant='warning' show={showAlertMessage}>
+                        {alertMessage}
+                    </Alert>
 
-            <Alert key='success' variant='success' show={successSignup}>
-            Your account has been successfully created. Please log in<span> </span>
-            <Link style={{color:'darkgreen',fontWeight:'bold'}} to='/login'>here.</Link> 
-            </Alert>
+                    <Alert key='success' variant='success' show={successSignup}>
+                    Your account has been successfully created. Please log in<span> </span>
+                    <Link style={{color:'darkgreen',fontWeight:'bold'}} to='/login'>here.</Link> 
+                    </Alert>
 
-            <Button onClick={signup} variant="primary">
-                Sign up
-            </Button>
+                    <div className="d-grid gap-2">
+                    <Button onClick={signup} variant="primary" >
+                        Sign up
+                    </Button>
+                    </div>
+
+                    <div>
+                        <p className="mt-3 text-secondary text-center">
+                        Already have an account? <Link to="/login" className="link-primary text-decoration-none">Login</Link>
+                        </p>
+                    </div>
+                </Col>
+            </Row>
         </Form>
         </Card.Body>
     </Card>

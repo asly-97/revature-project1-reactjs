@@ -70,7 +70,7 @@ console.log(userDetails)
 
     <Navbar expand="lg" bg='dark' data-bs-theme="dark" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/">Some Title</Navbar.Brand>
+        <Navbar.Brand href="#">ERS</Navbar.Brand>
         <Nav className="me-auto">
           {/** <Nav.Link href="/">Home</Nav.Link> */}
 
@@ -91,7 +91,7 @@ console.log(userDetails)
         <Navbar.Collapse className="justify-content-end">
           <DropdownButton id="dropdown-basic-button" className='dropdown_btn' variant='secondary' title={getLoggedInUserDetails()?.username}>
             {/* <Dropdown.Item href="/">Reimbursements</Dropdown.Item> */}
-            <Dropdown.Item href="/account/update_profile">Update My Account</Dropdown.Item>
+            <Dropdown.Item><Link className='nav-link' to='/account/update_profile'>Update My Account</Link></Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
           </DropdownButton>
