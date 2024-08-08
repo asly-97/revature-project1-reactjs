@@ -72,7 +72,7 @@ export const EmployeeHomePage: React.FC = () => {
 
     return(
         <>
-            <div style={{textAlign:'center', paddingTop:'0.5rem'}}>
+            <div style={{textAlign:'center', marginTop:'-2rem'}}>
                 <h3>My Reimbursements</h3>
                 <hr/>
                 {reimbursements.reimbursementsList?.length==0?<div><h4>You don't have any reimbursements yet.</h4></div>:
