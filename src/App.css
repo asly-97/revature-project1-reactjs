@@ -2,3 +2,7 @@
 body{
   background-color: blue;
 }
+
+.dropdown_btn{
+  margin-right: 1rem;
+}

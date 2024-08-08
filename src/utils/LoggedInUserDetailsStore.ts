@@ -11,11 +11,20 @@ export function storeLoggedInUserDetails(userDetails:any){
 
 export function getLoggedInUserDetails():LoggedInUserDetails{
 
+    let user_role = undefined;
+    let stored_role = localStorage.getItem('role');
+    if(stored_role){
+        if(stored_role.toLowerCase() == 'manager')
+            user_role = UserRole.Manager;
+        else
+            user_role = UserRole.Employee;
+
+    }
     return {
         firstName : localStorage.getItem('firstName'),
         lastName : localStorage.getItem('lastName'),
         username : localStorage.getItem('username'),
-        role : localStorage.getItem('role')?.toLowerCase() == 'manager'? UserRole.Manager: UserRole.Employee,
+        role : user_role,
         token : localStorage.getItem('token'),
     }
 }

@@ -84,7 +84,7 @@ function ReimbursementItem(reimbursement:any) {
           key={color}
           text='white'
           style={{ width: '18rem' }}
-          className="mb-3"
+          className="mb-3 my_card"
         >
           <Card.Header>{reimbursement.amount}$</Card.Header>
           <Card.Body>

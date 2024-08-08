@@ -11,17 +11,20 @@ function App() {
   const navigate = useNavigate()
   const location = useLocation();
 
-  if(!userDetails)
-    setUserDetails(getLoggedInUserDetails());
+  // if(userDetails?.firstName == null)
+  //   setUserDetails(getLoggedInUserDetails());
 
 
   useEffect(() => {
+    
+    if(userDetails?.firstName == null)
+      setUserDetails(getLoggedInUserDetails());
+    
     // Code to run on route change
     console.log('Route changed!', location.pathname);
 
     if(location.pathname == '/'){
       if(isUserLoggedIn()){
-        // setUserDetails(getLoggedInUserDetails())
 
         if(userDetails?.role == UserRole.Manager){
           navigate('manager/reimbursement')
@@ -40,7 +43,7 @@ function App() {
     }
     else if(location.pathname == '/login' || location.pathname == '/signup'){
       if(isUserLoggedIn()){
-        setUserDetails(getLoggedInUserDetails())
+        // setUserDetails(getLoggedInUserDetails())
   
         if(userDetails?.role == UserRole.Manager){
           navigate('manager/reimbursement')
@@ -57,6 +60,7 @@ function App() {
 
   function logout(){
     localStorage.clear();
+    setUserDetails(undefined);
     navigate('/login');
   }
 
@@ -69,23 +73,24 @@ console.log(userDetails)
         <Navbar.Brand href="/">Some Title</Navbar.Brand>
         <Nav className="me-auto">
           {/** <Nav.Link href="/">Home</Nav.Link> */}
-          <Link className='nav-link' to="/login">Home</Link>
 
-          {!isUserLoggedIn() && <>
-            <Link className='nav-link' to="/login">Login</Link> 
-            <Link className='nav-link' to="/signup">Signup</Link>
-          </>}
-
-          {isUserLoggedIn() && <>
-            {getLoggedInUserDetails()?.role == UserRole.Manager && <Link className='nav-link' to="/manager/users">Users</Link>}
-            {getLoggedInUserDetails()?.role == UserRole.Employee && <Link className='nav-link' to="/employee/create_reimbursement">Create Reimbursement</Link>}
-          </>}
+          {isUserLoggedIn()?
+            <>
+              {userDetails?.role == UserRole.Manager && <Link className='nav-link' to="/manager/users">Users</Link>}
+              {userDetails?.role == UserRole.Employee && <Link className='nav-link' to="/employee/create_reimbursement">Create Reimbursement</Link>}
+              <Link className='nav-link' to="/">Reimbursements</Link>
+            </>:
+            <>
+              <Link className='nav-link' to="/login">Login</Link> 
+              <Link className='nav-link' to="/signup">Signup</Link>
+            </>
+          }
         </Nav>
         <Navbar.Toggle />
         {isUserLoggedIn() &&
         <Navbar.Collapse className="justify-content-end">
-          <DropdownButton id="dropdown-basic-button" variant='secondary' title={getLoggedInUserDetails()?.username}>
-            <Dropdown.Item href="/">Reimbursements</Dropdown.Item>
+          <DropdownButton id="dropdown-basic-button" className='dropdown_btn' variant='secondary' title={getLoggedInUserDetails()?.username}>
+            {/* <Dropdown.Item href="/">Reimbursements</Dropdown.Item> */}
             <Dropdown.Item href="/account/update_profile">Update My Account</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item href="#" onClick={logout}>Logout</Dropdown.Item>
