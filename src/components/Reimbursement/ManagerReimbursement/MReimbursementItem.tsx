@@ -36,7 +36,7 @@ function MReimbursementItem(props:any) {
             <Card.Title>{reimbursement.user?.firstName+' '+reimbursement.user?.lastName}</Card.Title>
             <Card.Text>{reimbursement.description}</Card.Text>
             <Card.Text>created : ({formatDistance(createdAt, new Date())} ago)</Card.Text>
-            <Card.Text>{reimbursement.status} {resolvedAt? " : ("+formatDistance(resolvedAt, new Date()) +") ago" : ""} </Card.Text>
+            <Card.Text>{reimbursement.status} {resolvedAt && " : ("+formatDistance(resolvedAt, new Date()) +" ago)"} </Card.Text>
           </Card.Body>
 
           
