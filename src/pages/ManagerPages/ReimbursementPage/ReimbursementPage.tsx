@@ -12,7 +12,8 @@ const enum StatusFilter{
     All,
     Pending,
     Approved,
-    Denied
+    Denied,
+    Other
 }
 
 
@@ -107,7 +108,8 @@ export const ReimbursementPage: React.FC = () => {
         let date2 = date_period == 'between'? `/${to_date}`: by_me;
         await api.get(`/reimbursements/resolved/${date_period}/${from_date}`+date2)
                 .then( ({data}) => {
-                    setReimbursements(data);
+                    setFilteredReimbursements(data);
+                    setStatusFilter(StatusFilter.Other);
 
                     setShowDateFilter(false);
                     setMsg('');
