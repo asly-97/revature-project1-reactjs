@@ -6,3 +6,49 @@
     grid-column-gap: 4rem;
     grid-row-gap: 1.5rem;
 }
+
+.my_col{
+    text-align:center;
+}
+
+#show_date{
+    background-color: aliceblue;
+    width: 18.5vw;
+    margin: auto;
+    z-index: -1;
+}
+
+.filter_date_period{
+    text-align: center;
+    margin: 2vw 0;
+    width: 100%;
+}
+
+.my_check{
+    margin: 2vw 0 2vw 0;
+    background-color: rgb(227, 227, 227);
+}
+.my_check>input{
+    margin-left: 2vw;
+    border-color: rgb(108, 108, 109);
+    border-width: 3px;
+}
+
+.show_date_filter{
+    text-decoration: underline;
+    color: blue;
+}
+.show_date_filter:hover{
+    cursor: pointer;
+}
+
+.my_center{
+    margin: auto;
+}
+
+#t{
+    z-index: 1;
+}
+#t:hover{
+    cursor: pointer;
+}
