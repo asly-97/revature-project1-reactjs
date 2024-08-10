@@ -4,6 +4,7 @@ import { __api_url } from "../../../utils/constants"
 import { useEffect, useState } from "react"
 import { Employee } from "../../../Interfaces/Employee"
 import { ConfirmationModal } from "../../../components/ConfirmationModal/CofirmationModal"
+import { Link } from "react-router-dom"
 
 interface EmployeeToDelete {
     userId?:number,
@@ -179,7 +180,12 @@ export const UsersPage: React.FC = () => {
                                         <td>{emp.userId}</td>
                                         <td>{emp.firstName}</td>
                                         <td>{emp.lastName}</td>
-                                        <td>@{emp.username}</td>
+                                        <td>
+                                            <Link className="link-warning link-offset-2 link-underline-opacity-0" 
+                                            to={`/user/${emp.userId}`}>
+                                                @{emp.username}
+                                            </Link>
+                                        </td>
                                         <td align="center">
                                             <Button size="sm" variant="primary" className="mb-2" onClick={()=>showPromotionModal(emp)}>Promote to Manager</Button><br/>
                                             <Button size="sm" variant="danger" onClick={()=>showDeleteModal(emp)}>Delete User</Button>

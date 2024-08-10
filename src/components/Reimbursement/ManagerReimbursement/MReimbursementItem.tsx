@@ -2,6 +2,7 @@ import Card from 'react-bootstrap/Card';
 import { format, formatDistance } from 'date-fns';
 import { ReimbursementInterface } from '../../../Interfaces/ReimbursementInterface';
 import { Button, Container, Row, Tooltip } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function MReimbursementItem(props:any) {
 
@@ -33,7 +34,9 @@ function MReimbursementItem(props:any) {
         >
           <Card.Header>{reimbursement.amount}$</Card.Header>
           <Card.Body>
-            <Card.Title>{reimbursement.user?.firstName+' '+reimbursement.user?.lastName}</Card.Title>
+            <Card.Title>
+              <Link className="link-warning link-offset-2 link-underline-opacity-0" to={`/user/${reimbursement.user?.userId}`}>{reimbursement.user?.firstName+' '+reimbursement.user?.lastName}</Link>
+            </Card.Title>
             <Card.Text>{reimbursement.description}</Card.Text>
             <Card.Text>
             created : {formatDistance(createdAt, new Date())} ago | {format(createdAt, 'MMMM do')}
