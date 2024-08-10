@@ -7,6 +7,7 @@ import { ReimbursementPage } from "../pages/ManagerPages/ReimbursementPage/Reimb
 import { UsersPage } from "../pages/ManagerPages/UsersPage/UsersPage";
 import UpdateUserInfoForm from "../components/User/UpdateUserInfoForm";
 import ReimbursementForm from "../components/Reimbursement/ReimbursementForm";
+import { EmployeeDetailsPage } from "../pages/ManagerPages/EmployeeDetailsPage/EmployeeDetailsPage";
 
 
 export const MainRouter = createBrowserRouter([
@@ -22,6 +23,7 @@ export const MainRouter = createBrowserRouter([
             { path: 'account/update_profile', element: <UpdateUserInfoForm/> },
             { path: 'manager/reimbursement', element: <ReimbursementPage/> },
             { path: 'manager/users', element: <UsersPage/> },
+            { path: 'user/:userId', element: <EmployeeDetailsPage/> },
         ]
     }
 

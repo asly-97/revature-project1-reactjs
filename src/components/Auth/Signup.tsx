@@ -61,26 +61,52 @@ export const Signup: React.FC = () => {
                 .catch(err => {
                     console.log(err)
                     if(err.response.status >= 400 && err.response.status <=499){
-                        setAlertMessage(err.response.data.message)
+                        let errorMessage = ''
+                        for(let key in err.response.data)(
+                            errorMessage += '- '+err.response.data[key]+'\n'
+                        )
+                        setAlertMessage(errorMessage)
                         setShowAlertMessage(true)
                     }
                 })
     }
 
+    const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event:any) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const form = event.currentTarget;
+
+    if (form.checkValidity() === true) {
+      signup()
+    }
+
+    setValidated(true);
+  };
+
     return(
         <Card className="mb-5" >
         <Card.Body>
-        <Form>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row>
                 <Col>
                     <Form.Group className="mb-3" controlId="formFirstName">
                         <Form.Label>First name</Form.Label>
-                        <Form.Control name='firstName' onChange={onInputValueChanged} type="text" placeholder="Enter first name"  />
+                        <Form.Control minLength={3} required name='firstName' onChange={onInputValueChanged} type="text" placeholder="Enter first name"  />
+                        <Form.Control.Feedback type="invalid">
+                        Must be at least 3 characters.
+                        </Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formLastName">
                         <Form.Label>Last name</Form.Label>
-                        <Form.Control name="lastName" onChange={onInputValueChanged}  type="text" placeholder="Enter last name" />
+                        <Form.Control minLength={3} required name="lastName" onChange={onInputValueChanged}  type="text" placeholder="Enter last name" />
+                        <Form.Control.Feedback type="invalid">
+                        Must be at least 3 characters.
+                        </Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                 </Col>
 
@@ -88,19 +114,27 @@ export const Signup: React.FC = () => {
                 <Col>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control name="username" onChange={onInputValueChanged}  type="text" placeholder="Enter Username" />
+                        <Form.Control minLength={3} required name="username" onChange={onInputValueChanged}  type="text" placeholder="Enter Username" />
+                        <Form.Control.Feedback type="invalid">
+                        Must be at least 3 characters.
+                        </Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control name="password" onChange={onInputValueChanged}  type="password" placeholder="Password" />
+                        <Form.Control minLength={5} required name="password" onChange={onInputValueChanged}  type="password" placeholder="Password" />
+                        <Form.Control.Feedback type="invalid">
+                        Must be at least 5 characters.
+                        </Form.Control.Feedback>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                 </Col>
             </Row>
 
             <Row className="justify-content-center">
                 <Col sm={9}>
-                    <Alert key='warning' variant='warning' show={showAlertMessage}>
+                    <Alert style={{whiteSpace: 'pre-line'}} key='warning' variant='warning' show={showAlertMessage}>
                         {alertMessage}
                     </Alert>
 
@@ -110,7 +144,7 @@ export const Signup: React.FC = () => {
                     </Alert>
 
                     <div className="d-grid gap-2">
-                    <Button onClick={signup} variant="primary" >
+                    <Button type="submit" variant="primary" >
                         Sign up
                     </Button>
                     </div>
