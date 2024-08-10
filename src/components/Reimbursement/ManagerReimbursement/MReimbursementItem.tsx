@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
-import { formatDistance } from 'date-fns';
+import { format, formatDistance } from 'date-fns';
 import { ReimbursementInterface } from '../../../Interfaces/ReimbursementInterface';
-import { Button, Container, Row } from 'react-bootstrap';
+import { Button, Container, Row, Tooltip } from 'react-bootstrap';
 
 function MReimbursementItem(props:any) {
 
@@ -35,8 +35,10 @@ function MReimbursementItem(props:any) {
           <Card.Body>
             <Card.Title>{reimbursement.user?.firstName+' '+reimbursement.user?.lastName}</Card.Title>
             <Card.Text>{reimbursement.description}</Card.Text>
-            <Card.Text>created : ({formatDistance(createdAt, new Date())} ago)</Card.Text>
-            <Card.Text>{reimbursement.status} {resolvedAt && " : ("+formatDistance(resolvedAt, new Date()) +" ago)"} </Card.Text>
+            <Card.Text>
+            created : {formatDistance(createdAt, new Date())} ago | {format(createdAt, 'MMMM do')}
+            </Card.Text>
+            <Card.Text>{reimbursement.status} {resolvedAt && ` : ${formatDistance(resolvedAt, new Date())} ago | ${format(resolvedAt, 'MMMM do')}`} </Card.Text>
           </Card.Body>
 
           
