@@ -60,7 +60,11 @@ export const Signup: React.FC = () => {
                 .catch(err => {
                     console.log(err)
                     if(err.response.status >= 400 && err.response.status <=499){
-                        setAlertMessage(err.response.data.message)
+                        let errorMessage = ''
+                        for(let key in err.response.data)(
+                            errorMessage += '- '+err.response.data[key]+'\n'
+                        )
+                        setAlertMessage(errorMessage)
                         setShowAlertMessage(true)
                     }
                 })
@@ -99,7 +103,7 @@ export const Signup: React.FC = () => {
 
             <Row className="justify-content-center">
                 <Col sm={9}>
-                    <Alert key='warning' variant='warning' show={showAlertMessage}>
+                    <Alert style={{whiteSpace: 'pre-line'}} key='warning' variant='warning' show={showAlertMessage}>
                         {alertMessage}
                     </Alert>
 
