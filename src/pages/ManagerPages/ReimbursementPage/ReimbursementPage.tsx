@@ -6,6 +6,8 @@ import MReimbursementItem from "../../../components/Reimbursement/ManagerReimbur
 import '../../../styles/reimbursementList.css'
 import { ReimbursementInterface } from "../../../Interfaces/ReimbursementInterface"
 import { Link } from "react-router-dom"
+import UserSelectInput from "../../../components/UserSelectInput/UserSelectInput"
+import { Employee } from "../../../Interfaces/Employee"
 
 
 const enum StatusFilter{
@@ -166,6 +168,37 @@ export const ReimbursementPage: React.FC = () => {
 
 
 
+
+    {/* ------------ FILTER BY USER ---------- */}
+    {/* vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv */}
+
+    const getAllReimbursementsByUser = async (employee:Employee) => {
+        await api.get(`/user/${employee.userId}/reimbursements`)
+                .then( ({data}) => {
+                    console.log('-- getAllReimbursementsByUser -- ',data)
+                    setReimbursements(data)
+                })
+                .catch(err => {
+                    console.log('-- error -- ',err)
+                })
+    }
+
+    //const [selectedUserFilter, setSelectedUserFilter] = useState<Employee | null>(null);
+
+    const handleUserSelect = (employee: Employee) => {
+    //setSelectedUserFilter(employee);
+    getAllReimbursementsByUser(employee)
+    
+    };
+
+    {/* AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */}
+
+
+
+
+
+
+
     return(
         <>
             <Container fluid>
@@ -173,7 +206,7 @@ export const ReimbursementPage: React.FC = () => {
             <Container style={{width:'100vw'}}>
                 <Row className="justify-content-center mb-4">
                     <Col className="my_col">
-                    <h6>filter by status</h6>
+                    <h6>Filter by status</h6>
                     <ButtonGroup>
                         <ToggleButton
                             id={'all'}
@@ -222,9 +255,13 @@ export const ReimbursementPage: React.FC = () => {
                     </ButtonGroup>
                     </Col>
 
+                    <Col>
+                    <h6>Filter by employee</h6>
+                    <UserSelectInput onSelect={handleUserSelect} />
+                    </Col>
 
                     <Col className="my_col">
-                        <h6>filter by resolve date</h6>
+                        <h6>Filter by resolved date</h6>
 
                         <Row id="t" onClick={handleShow}>
                             <Col>
@@ -324,6 +361,13 @@ export const ReimbursementPage: React.FC = () => {
                             <MReimbursementItem reimbursement={reimbItem} onResolve={resolveReimbursement} />
                         </div>
                     ))}
+                    {
+                        filtered_reimbursements.length == 0 && (
+                            <div className="mt-5 my_col" style={{width:'80rem'}}>
+                                <h1>No Reimbursements to Show</h1>
+                            </div>
+                        )
+                    }
                 </div>
 
 

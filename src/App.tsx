@@ -76,7 +76,7 @@ console.log(userDetails)
 
           {isUserLoggedIn()?
             <>
-              {userDetails?.role == UserRole.Manager && <Link className='nav-link' to="/manager/users">Users</Link>}
+              {userDetails?.role == UserRole.Manager && <Link className='nav-link' to="/manager/users">Employees</Link>}
               {userDetails?.role == UserRole.Employee && <Link className='nav-link' to="/employee/create_reimbursement">Create Reimbursement</Link>}
               <Link className='nav-link' to="/">Reimbursements</Link>
             </>:
