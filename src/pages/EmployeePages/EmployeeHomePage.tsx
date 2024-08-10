@@ -5,6 +5,7 @@ import ReimbursementList from "../../components/Reimbursement/ReimbursementList"
 import { ReimbursementInterface } from "../../Interfaces/ReimbursementInterface";
 import { Row, Col, ButtonGroup, Button } from "react-bootstrap";
 import { isUserLoggedIn } from "../../utils/LoggedInUserDetailsStore";
+import { __api_url } from "../../utils/constants";
 
 
 export const EmployeeHomePage: React.FC = () => {
@@ -16,7 +17,7 @@ export const EmployeeHomePage: React.FC = () => {
 
     const token = localStorage.getItem("token");
     const api = axios.create({
-        baseURL: 'http://localhost:8080',
+        baseURL: __api_url,
         headers: {'Authorization': 'Bearer '+token}
     });
     

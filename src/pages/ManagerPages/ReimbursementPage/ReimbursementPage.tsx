@@ -5,7 +5,6 @@ import { Button, ButtonGroup, Col, Container, Form, Modal, Row, Spinner, ToggleB
 import MReimbursementItem from "../../../components/Reimbursement/ManagerReimbursement/MReimbursementItem"
 import '../../../styles/reimbursementList.css'
 import { ReimbursementInterface } from "../../../Interfaces/ReimbursementInterface"
-import { Link } from "react-router-dom"
 import UserSelectInput from "../../../components/UserSelectInput/UserSelectInput"
 import { Employee } from "../../../Interfaces/Employee"
 
@@ -264,13 +263,13 @@ export const ReimbursementPage: React.FC = () => {
                         <h6>Filter by resolved date</h6>
 
                         <Row id="t" onClick={handleShow}>
-                            <Col>
+                            <Col style={{width:'1vw'}}>
                                 <Form.FloatingLabel id="show_date" label={date_period == 'between'? 'to':date_period}>
                                     <Form.Control id='show_date' value={from_date} type="date" disabled />
                                 </Form.FloatingLabel>
                             </Col>
                             {(date_period == 'between') && 
-                                <Col>
+                                <Col style={{width:'1vw'}}>
                                     <Form.FloatingLabel id="show_date" label="from">
                                         <Form.Control id='show_date' value={to_date} type="date" disabled />
                                     </Form.FloatingLabel>

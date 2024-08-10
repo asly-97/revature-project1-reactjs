@@ -1,6 +1,7 @@
 import axios from "axios";
 import { redirect } from "react-router-dom";
 import { ReimbursementInterface } from "../Interfaces/ReimbursementInterface";
+import { __api_url } from "../utils/constants";
 
 
 const reimbursementService = {
@@ -8,7 +9,7 @@ const reimbursementService = {
         let token = localStorage.getItem('token');
         if(token){
             const api = axios.create({
-                baseURL: 'http://localhost:8080',
+                baseURL: __api_url,
                 headers: {'Authorization': 'Bearer '+token}
             });
             return api.get('/reimbursements')
@@ -27,7 +28,7 @@ const reimbursementService = {
         let token = localStorage.getItem('token');
         if(token){
             const api = axios.create({
-                baseURL: 'http://localhost:8080',
+                baseURL: __api_url,
                 headers: {'Authorization': 'Bearer '+token}
             });
             return api.get('/reimbursements/pending')
@@ -46,7 +47,7 @@ const reimbursementService = {
         let token = localStorage.getItem('token');
         if(token){
             const api = axios.create({
-                baseURL: 'http://localhost:8080',
+                baseURL: __api_url,
                 headers: {'Authorization': 'Bearer '+token}
             });
             return api.get('/user/'+id+'/reimbursements')
