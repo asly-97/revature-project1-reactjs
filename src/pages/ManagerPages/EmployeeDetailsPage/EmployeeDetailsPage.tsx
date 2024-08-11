@@ -131,7 +131,7 @@ export const EmployeeDetailsPage: React.FC = () => {
      */
 
     return(
-            <Row className="w-100" style={{margin:0}}>
+            <Row style={{margin:0, width:'110%'}}>
                 <Col xs={5}>
                 <Card>
                     <Card.Header>

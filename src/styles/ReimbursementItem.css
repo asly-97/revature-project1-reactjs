@@ -8,6 +8,10 @@
     color: red;
     text-align: center;
 }
+.success_msg{
+    color: green;
+    text-align: center;
+}
 
 #disabled_btn{
     background-color: gray;

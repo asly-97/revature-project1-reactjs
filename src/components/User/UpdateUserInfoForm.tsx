@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Container, Card, Col, Row, Form, Button, Spinner } from "react-bootstrap";
+import { Container, Card, Col, Row, Form, Button, Spinner, Toast } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { __api_url } from "../../utils/constants";
 import { getLoggedInUserDetails, isUserLoggedIn, storeLoggedInUserDetails } from "../../utils/LoggedInUserDetailsStore";
@@ -9,6 +9,7 @@ export default function UpdateUserInfoForm(){
 
     const [userId, setUserId] = useState(-1);
     const [message, setMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [username, setUsername] = useState("");
@@ -32,6 +33,7 @@ export default function UpdateUserInfoForm(){
 
     function update_info(){
         setSpin(true);
+        setSuccessMessage('');
         let body1 = {'firstName':firstName, 'lastName':lastName,
             'username':username
         };
@@ -46,7 +48,7 @@ export default function UpdateUserInfoForm(){
         
         api.patch('/user', body)
             .then(function (response) {
-                setMessage("success");
+                setSuccessMessage("Updated Successfully");
                 storeLoggedInUserDetails(response.data);
             })
             .catch((error) =>{
@@ -139,13 +141,14 @@ export default function UpdateUserInfoForm(){
     
 
     return(
-        <Container>
+        <Container style={{marginTop:'-3vh'}}>
             <Card className="border border-light-subtle rounded-3 shadow-sm">
                 <Card.Body className="p-3 p-md-4 p-xl-5 q">
                     <h2 className="fs-6 fw-normal text-center text-secondary mb-4">Update Account Info</h2>
                     <Col className="gy-2">
                         {spin && <center><Spinner animation="border" /></center>}   
                         <div className="err_msg">{message}</div>
+                        <div className="success_msg">{successMessage}</div>
                         <Row>
                             <div className="err_msg">{firstNameMsg}</div>
                             <Form.Group className="mb-3">
