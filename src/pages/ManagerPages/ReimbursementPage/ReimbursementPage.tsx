@@ -264,13 +264,13 @@ export const ReimbursementPage: React.FC = () => {
 
                         <Row id="t" onClick={handleShow}>
                             <Col style={{width:'1vw'}}>
-                                <Form.FloatingLabel id="show_date" label={date_period == 'between'? 'to':date_period}>
+                                <Form.FloatingLabel id="show_date" label={date_period == 'between'? 'from':date_period}>
                                     <Form.Control id='show_date' value={from_date} type="date" disabled />
                                 </Form.FloatingLabel>
                             </Col>
                             {(date_period == 'between') && 
                                 <Col style={{width:'1vw'}}>
-                                    <Form.FloatingLabel id="show_date" label="from">
+                                    <Form.FloatingLabel id="show_date" label="to">
                                         <Form.Control id='show_date' value={to_date} type="date" disabled />
                                     </Form.FloatingLabel>
                                 </Col>
