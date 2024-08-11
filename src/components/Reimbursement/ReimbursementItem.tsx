@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import { formatDistance } from 'date-fns';
 import { Alert, Button, Form, Modal } from 'react-bootstrap';
 import'../../styles/ReimbursementItem.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { __api_url } from '../../utils/constants';
@@ -36,7 +36,12 @@ function ReimbursementItem(reimbursement:any) {
   const navigate = useNavigate();
 
   const handleClose = () => {setDisableBtn(true); setMsg(''); setShow(false);}
-  const handleShow = (id:number, description:string) => {setReimbID(id); setDescription(description); setShow(true);}
+  const handleShow = (id:number) => {setReimbID(id); setShow(true);}
+
+
+  useEffect(()=>{
+    setDescription(reimbursement.description);
+  },[]);
 
 
   function changeDescription(){
@@ -62,6 +67,7 @@ function ReimbursementItem(reimbursement:any) {
       else
           navigate('../login');
   }
+
 
   function validate(input:any){
     let value = input.target.value.trim();
@@ -89,7 +95,7 @@ function ReimbursementItem(reimbursement:any) {
           <Card.Header>{reimbursement.amount}$</Card.Header>
           <Card.Body>
             <Card.Title>{reimbursement.user?.firstName+' '+reimbursement.user?.lastName}</Card.Title>
-            <Card.Text>{description?description:reimbursement.description} {resolvedAt?"": <Button className='edit-btn' variant="primary" onClick={()=>handleShow(reimbursement.reimbId, reimbursement.description)}>Edit</Button>}</Card.Text> 
+            <Card.Text>{description?description:reimbursement.description} {resolvedAt?"": <Button className='edit-btn' variant="primary" onClick={()=>handleShow(reimbursement.reimbId)}>Edit</Button>}</Card.Text> 
             <Card.Text>created : ({formatDistance(createdAt, new Date())} ago)</Card.Text>
             <Card.Text>{reimbursement.status} {resolvedAt? " : ("+formatDistance(resolvedAt, new Date()) +" ago)" : ""} </Card.Text>
           </Card.Body>
