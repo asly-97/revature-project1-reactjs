@@ -4,6 +4,7 @@ import '../../styles/Login.css';
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Button, Form, Spinner } from "react-bootstrap";
 import { storeLoggedInUserDetails } from "../../utils/LoggedInUserDetailsStore";
+import { __api_url } from "../../utils/constants";
 
 export default function() {
     const [message, setMessage] = useState("");
@@ -18,7 +19,7 @@ export default function() {
     const navigate = useNavigate();
     
     const api = axios.create({
-        baseURL: 'http://localhost:8080'
+        baseURL: __api_url
     });
 
     function authenticate(){

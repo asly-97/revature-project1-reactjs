@@ -2,12 +2,13 @@ import axios from "axios"
 import { useState } from "react"
 import { Alert, Button, Card, Col, Container, Form, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { __api_url } from "../../utils/constants"
 
 
 export const Signup: React.FC = () => {
 
     const api = axios.create({
-        baseURL: 'http://localhost:8080'
+        baseURL: __api_url
     })
 
     const[firstName,setFirstName] = useState("")
