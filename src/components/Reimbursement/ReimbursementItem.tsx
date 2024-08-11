@@ -92,7 +92,7 @@ function ReimbursementItem(reimbursement:any) {
           style={{ width: '18rem' }}
           className="mb-3 my_card"
         >
-          <Card.Header>{reimbursement.amount}$</Card.Header>
+          <Card.Header>${reimbursement.amount}</Card.Header>
           <Card.Body>
             <Card.Title>{reimbursement.user?.firstName+' '+reimbursement.user?.lastName}</Card.Title>
             <Card.Text>{description?description:reimbursement.description} {resolvedAt?"": <Button className='edit-btn' variant="primary" onClick={()=>handleShow(reimbursement.reimbId)}>Edit</Button>}</Card.Text> 

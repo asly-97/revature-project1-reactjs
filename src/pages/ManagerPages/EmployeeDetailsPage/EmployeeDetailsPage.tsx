@@ -3,9 +3,11 @@ import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap"
 import { __api_url } from "../../../utils/constants"
 import { useEffect, useState } from "react"
 import { Employee } from "../../../Interfaces/Employee"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { formatDistance } from "date-fns/formatDistance"
 import './EmployeeDetailsPage.css'
+import { PromoteToManager } from "../../../components/PromoteToManager/PromoteToManager"
+import { DeleteEmployee } from "../../../components/DeleteEmployee/DeleteEmployee"
 
 
 
@@ -27,7 +29,7 @@ export const EmployeeDetailsPage: React.FC = () => {
     }, [userIdNumber]);
 
 
-    const [employee,setEmployee] = useState<Employee>()
+    const [employee,setEmployee] = useState<Employee>({})
 
     const _token = localStorage.getItem('token')
 
@@ -68,6 +70,8 @@ export const EmployeeDetailsPage: React.FC = () => {
         return '';
     }
 
+
+    const navigate = useNavigate()
 
 
 
@@ -167,9 +171,9 @@ export const EmployeeDetailsPage: React.FC = () => {
                         </ListGroup.Item>
                     </ListGroup>
                     <Card.Footer>
-                    <Button variant="primary">Promote to Manager</Button>
+                    <PromoteToManager employee={employee} onStateChange={()=>navigate('/manager/users')}/>
                     {' '}
-                    <Button variant="danger">Delete User</Button>
+                    <DeleteEmployee employee={employee} onStateChange={()=>navigate('/manager/users')}/>
                     </Card.Footer>
                 </Card>
                 </Col>
