@@ -101,10 +101,12 @@ console.log(userDetails)
     
 
       <Container fluid className='mt-5'>
-        <Row className='justify-content-center'>
-          <Col xs='auto'>
+        <Row className='d-flex justify-content-center align-items-start'>
+          <Col xs={10} style={{padding:0}} className='d-flex justify-content-center align-items-start'>
             { /** Rendered page automatically goes here */  }
-            <Outlet />
+            <div className='w-100 d-flex flex-column align-items-center justify-content-start' style={{margin: 0, padding: 0 }}>
+              <Outlet />
+            </div>
           </Col>
         </Row>
       </Container>

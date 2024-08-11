@@ -1,0 +1,17 @@
+.user-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.user-field-attribute{
+    width: 7rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.user-field-value{
+    margin: 0;
+}
